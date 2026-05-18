@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Mecha Battle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        <div id="gameOver" class="game-over hidden">
+            <h1 id="winnerText"></h1>
+            <button id="restartBtn">Restart Battle</button>
+        </div>
+        <div class="controls-info">
+            <div class="player-controls">
+                <h3>Player 1 (Blue)</h3>
+                <p>A/D: Move | W: Jump | Space: Attack | S: Defend</p>
+            </div>
+            <div class="player-controls">
+                <h3>Player 2 (Red)</h3>
+                <p>←/→: Move | ↑: Jump | Enter: Attack | ↓: Defend</p>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
