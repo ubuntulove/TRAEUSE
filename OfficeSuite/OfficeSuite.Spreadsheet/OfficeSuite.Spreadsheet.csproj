@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <RootNamespace>OfficeSuite.Spreadsheet</RootNamespace>
+    <AssemblyName>OfficeSuite.Spreadsheet</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OfficeSuite.Core\OfficeSuite.Core.csproj" />
+    <ProjectReference Include="..\OfficeSuite.Common\OfficeSuite.Common.csproj" />
+  </ItemGroup>
+</Project>

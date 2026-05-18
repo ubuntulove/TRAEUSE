@@ -1,0 +1,1303 @@
+<UserControl x:Class="OfficeSuite.Common.Views.OfficeDialogs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/OfficeSuite.Common;component/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="DialogButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="16,8"/>
+                <Setter Property="MinWidth" Value="80"/>
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.9"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.8"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="PrimaryButtonStyle" TargetType="Button" BasedOn="{StaticResource DialogButtonStyle}">
+                <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+            </Style>
+
+            <Style x:Key="SecondaryButtonStyle" TargetType="Button" BasedOn="{StaticResource DialogButtonStyle}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
+
+            <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Padding" Value="10,8"/>
+                <Setter Property="Margin" Value="0,5"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="4">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+                                </Trigger>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+                                    <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="LabelStyle" TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,5,0,5"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            </Style>
+
+            <Style x:Key="DescriptionStyle" TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,0,0,10"/>
+                <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{DynamicResource HeaderBackgroundColor}"
+                Padding="20,15">
+            <TextBlock x:Name="DialogTitle"
+                       Text="{Binding Title}"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+        </Border>
+
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Padding="20">
+            <ContentPresenter x:Name="DialogContent"/>
+        </ScrollViewer>
+
+        <Border Grid.Row="2"
+                Background="{DynamicResource FooterBackgroundColor}"
+                Padding="20,15">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button x:Name="CancelButton"
+                        Content="Cancel"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="CancelButton_Click"/>
+                <Button x:Name="NoButton"
+                        Content="No"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="NoButton_Click"/>
+                <Button x:Name="YesButton"
+                        Content="Yes"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="YesButton_Click"/>
+                <Button x:Name="OKButton"
+                        Content="OK"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="OKButton_Click"/>
+                <Button x:Name="ApplyButton"
+                        Content="Apply"
+                        Style="{StaticResource SecondaryButtonStyle}"
+                        Click="ApplyButton_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
+
+namespace OfficeSuite.Common.Views
+{
+    public partial class OfficeDialog : UserControl
+    {
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(OfficeDialog),
+                new PropertyMetadata("Dialog"));
+
+        public static readonly DependencyProperty DialogTypeProperty =
+            DependencyProperty.Register("DialogType", typeof(DialogType), typeof(OfficeDialog),
+                new PropertyMetadata(DialogType.Message));
+
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        public DialogType DialogType
+        {
+            get { return (DialogType)GetValue(DialogTypeProperty); }
+            set { SetValue(DialogTypeProperty, value); }
+        }
+
+        public event EventHandler<DialogResultEventArgs> DialogClosed;
+
+        public OfficeDialog()
+        {
+            InitializeComponent();
+            UpdateButtonVisibility();
+        }
+
+        private void UpdateButtonVisibility()
+        {
+            switch (DialogType)
+            {
+                case DialogType.Message:
+                    OKButton.Visibility = Visibility.Visible;
+                    YesButton.Visibility = Visibility.Collapsed;
+                    NoButton.Visibility = Visibility.Collapsed;
+                    CancelButton.Visibility = Visibility.Collapsed;
+                    ApplyButton.Visibility = Visibility.Collapsed;
+                    break;
+                case DialogType.Confirm:
+                    YesButton.Visibility = Visibility.Visible;
+                    NoButton.Visibility = Visibility.Visible;
+                    CancelButton.Visibility = Visibility.Visible;
+                    OKButton.Visibility = Visibility.Collapsed;
+                    ApplyButton.Visibility = Visibility.Collapsed;
+                    break;
+                case DialogType.Input:
+                    OKButton.Visibility = Visibility.Visible;
+                    CancelButton.Visibility = Visibility.Visible;
+                    YesButton.Visibility = Visibility.Collapsed;
+                    NoButton.Visibility = Visibility.Collapsed;
+                    ApplyButton.Visibility = Visibility.Collapsed;
+                    break;
+                case DialogType.Custom:
+                    OKButton.Visibility = Visibility.Visible;
+                    CancelButton.Visibility = Visibility.Visible;
+                    ApplyButton.Visibility = Visibility.Visible;
+                    break;
+            }
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.OK });
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.Cancel });
+        }
+
+        private void YesButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.Yes });
+        }
+
+        private void NoButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.No });
+        }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.Apply });
+        }
+
+        protected virtual void OnDialogClosed(DialogResultEventArgs e)
+        {
+            DialogClosed?.Invoke(this, e);
+        }
+    }
+
+    public enum DialogType
+    {
+        Message,
+        Confirm,
+        Input,
+        Custom
+    }
+
+    public enum DialogResult
+    {
+        None,
+        OK,
+        Cancel,
+        Yes,
+        No,
+        Apply
+    }
+
+    public class DialogResultEventArgs : EventArgs
+    {
+        public DialogResult Result { get; set; }
+    }
+}
+
+<UserControl x:Class="OfficeSuite.Common.Views.PropertyDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="500" d:DesignWidth="450">
+    <UserControl.Resources>
+        <Style x:Key="TabItemStyle" TargetType="TabItem">
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderThickness="0,0,0,2"
+                                BorderBrush="Transparent"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter ContentSource="Header"
+                                              HorizontalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource SelectedTabBackground}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource HoverTabBackground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PropertyLabelStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,8,0,4"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+        </Style>
+
+        <Style x:Key="PropertyValueStyle" TargetType="TextBox">
+            <Setter Property="Margin" Value="0,2,0,8"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+
+        <Style x:Key="ReadOnlyPropertyStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,2,0,8"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Background" Value="{DynamicResource ReadOnlyBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryTextColor}"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Background="{DynamicResource HeaderBackgroundColor}"
+                Padding="20,15">
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="DocumentIcon"
+                       Width="32"
+                       Height="32"
+                       Margin="0,0,10,0"/>
+                <StackPanel VerticalAlignment="Center">
+                    <TextBlock x:Name="DocumentName"
+                               Text="Document"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="White"/>
+                    <TextBlock x:Name="DocumentType"
+                               Text="Word Document"
+                               FontSize="11"
+                               Foreground="LightGray"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <TabControl Grid.Row="1"
+                    x:Name="PropertyTabs"
+                    Margin="10"
+                    BorderThickness="0"
+                    Background="Transparent">
+            <TabItem Header="General" Style="{StaticResource TabItemStyle}">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Object:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="ObjectName" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Title:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBox x:Name="TitleTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                    <TextBlock Text="Author:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBox x:Name="AuthorTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                    <TextBlock Text="Subject:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBox x:Name="SubjectTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                    <TextBlock Text="Keywords:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBox x:Name="KeywordsTextBox"
+                             Style="{StaticResource PropertyValueStyle}"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Height="60"/>
+
+                    <TextBlock Text="Category:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBox x:Name="CategoryTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                    <TextBlock Text="Status:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <ComboBox x:Name="StatusComboBox" Margin="0,2,0,8">
+                        <ComboBoxItem Content="Draft"/>
+                        <ComboBoxItem Content="In Review"/>
+                        <ComboBoxItem Content="Final"/>
+                        <ComboBoxItem Content="Published"/>
+                    </ComboBox>
+
+                    <TextBlock Text="Comments:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBox x:Name="CommentsTextBox"
+                             Style="{StaticResource PropertyValueStyle}"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Height="80"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Summary" Style="{StaticResource TabItemStyle}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Title:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="SummaryTitleTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Subject:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="SummarySubjectTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Author:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="SummaryAuthorTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Keywords:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="SummaryKeywordsTextBox"
+                                 Style="{StaticResource PropertyValueStyle}"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 Height="60"/>
+
+                        <TextBlock Text="Comments:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="SummaryCommentsTextBox"
+                                 Style="{StaticResource PropertyValueStyle}"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 Height="80"/>
+
+                        <TextBlock Text="Hyperlink Base:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="HyperlinkBaseTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Category:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="SummaryCategoryTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Version:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="VersionTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Manager:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="ManagerTextBox" Style="{StaticResource PropertyValueStyle}"/>
+
+                        <TextBlock Text="Company:" Style="{StaticResource PropertyLabelStyle}"/>
+                        <TextBox x:Name="CompanyTextBox" Style="{StaticResource PropertyValueStyle}"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Statistics" Style="{StaticResource TabItemStyle}">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Created:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="CreatedTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Modified:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="ModifiedTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Last Printed:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="LastPrintedTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Revision:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="RevisionTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Total Editing Time:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="EditingTimeTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Pages:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="PagesTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Words:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="WordsTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Characters:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="CharactersTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Lines:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="LinesTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+
+                    <TextBlock Text="Paragraphs:" Style="{StaticResource PropertyLabelStyle}"/>
+                    <TextBlock x:Name="ParagraphsTextBlock" Style="{StaticResource ReadOnlyPropertyStyle}"/>
+                </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Custom" Style="{StaticResource TabItemStyle}">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0"
+                              x:Name="CustomPropertiesGrid"
+                              AutoGenerateColumns="False"
+                              CanUserAddRows="True"
+                              CanUserDeleteRows="True"
+                              HeadersVisibility="Column"
+                              GridLinesVisibility="Horizontal"
+                              BorderThickness="1"
+                              BorderBrush="{DynamicResource BorderColor}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name"
+                                                Binding="{Binding Name}"
+                                                Width="*"/>
+                            <DataGridTextColumn Header="Type"
+                                                Binding="{Binding Type}"
+                                                Width="100"/>
+                            <DataGridTextColumn Header="Value"
+                                                Binding="{Binding Value}"
+                                                Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="1"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="0,10,0,0">
+                        <Button Content="Add"
+                                Padding="15,6"
+                                Margin="0,0,5,0"
+                                Click="AddProperty_Click"/>
+                        <Button Content="Remove"
+                                Padding="15,6"
+                                Click="RemoveProperty_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Content Types" Style="{StaticResource TabItemStyle}">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                        <TextBlock Text="Content type information:"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,5"/>
+                        <TextBlock x:Name="ContentTypeText"
+                                   Foreground="{DynamicResource SecondaryTextColor}"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <ListView Grid.Row="1"
+                              x:Name="ContentTypesList"
+                              BorderThickness="1"
+                              BorderBrush="{DynamicResource BorderColor}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Extension"
+                                                DisplayMemberBinding="{Binding Extension}"
+                                                Width="80"/>
+                                <GridViewColumn Header="Content Type"
+                                                DisplayMemberBinding="{Binding ContentType}"
+                                                Width="300"/>
+                                <GridViewColumn Header="Part"
+                                                DisplayMemberBinding="{Binding PartName}"
+                                                Width="200"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Border Grid.Row="2"
+                Background="{DynamicResource FooterBackgroundColor}"
+                Padding="20,15">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button Content="Preview"
+                        Padding="15,8"
+                        Margin="0,0,5,0"
+                        Click="Preview_Click"/>
+                <Button Content="OK"
+                        Padding="15,8"
+                        Margin="0,0,5,0"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="OK_Click"/>
+                <Button Content="Apply"
+                        Padding="15,8"
+                        Margin="0,0,5,0"
+                        Click="Apply_Click"/>
+                <Button Content="Cancel"
+                        Padding="15,8"
+                        Click="Cancel_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
+
+namespace OfficeSuite.Common.Views
+{
+    public partial class PropertyDialog : UserControl
+    {
+        public DocumentProperties Properties { get; set; }
+
+        public event EventHandler<PropertyChangedEventArgs> PropertiesChanged;
+        public event EventHandler<DialogResultEventArgs> DialogClosed;
+
+        public PropertyDialog()
+        {
+            InitializeComponent();
+            Properties = new DocumentProperties();
+            LoadProperties();
+        }
+
+        private void LoadProperties()
+        {
+            ObjectName.Text = Properties.ObjectName;
+            TitleTextBox.Text = Properties.Title;
+            AuthorTextBox.Text = Properties.Author;
+            SubjectTextBox.Text = Properties.Subject;
+            KeywordsTextBox.Text = Properties.Keywords;
+            CategoryTextBox.Text = Properties.Category;
+
+            CreatedTextBlock.Text = Properties.Created.ToString("g");
+            ModifiedTextBlock.Text = Properties.Modified.ToString("g");
+            LastPrintedTextBlock.Text = Properties.LastPrinted?.ToString("g") ?? "Never";
+            RevisionTextBlock.Text = Properties.Revision.ToString();
+            EditingTimeTextBlock.Text = Properties.TotalEditingTime.ToString(@"h\:mm\:ss");
+            PagesTextBlock.Text = Properties.Pages.ToString("N0");
+            WordsTextBlock.Text = Properties.Words.ToString("N0");
+            CharactersTextBlock.Text = Properties.Characters.ToString("N0");
+            LinesTextBlock.Text = Properties.Lines.ToString("N0");
+            ParagraphsTextBlock.Text = Properties.Paragraphs.ToString("N0");
+
+            ContentTypeText.Text = Properties.ContentType;
+        }
+
+        private void SaveProperties()
+        {
+            Properties.Title = TitleTextBox.Text;
+            Properties.Author = AuthorTextBox.Text;
+            Properties.Subject = SubjectTextBox.Text;
+            Properties.Keywords = KeywordsTextBox.Text;
+            Properties.Category = CategoryTextBox.Text;
+        }
+
+        private void AddProperty_Click(object sender, RoutedEventArgs e)
+        {
+            var newProperty = new CustomProperty { Name = "New Property", Type = "Text", Value = "" };
+            Properties.CustomProperties.Add(newProperty);
+            CustomPropertiesGrid.ItemsSource = null;
+            CustomPropertiesGrid.ItemsSource = Properties.CustomProperties;
+        }
+
+        private void RemoveProperty_Click(object sender, RoutedEventArgs e)
+        {
+            if (CustomPropertiesGrid.SelectedItem is CustomProperty property)
+            {
+                Properties.CustomProperties.Remove(property);
+                CustomPropertiesGrid.ItemsSource = null;
+                CustomPropertiesGrid.ItemsSource = Properties.CustomProperties;
+            }
+        }
+
+        private void Preview_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.None });
+        }
+
+        private void OK_Click(object sender, RoutedEventArgs e)
+        {
+            SaveProperties();
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.OK });
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e)
+        {
+            SaveProperties();
+            PropertiesChanged?.Invoke(this, new PropertyChangedEventArgs("Properties"));
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.Apply });
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            OnDialogClosed(new DialogResultEventArgs { Result = DialogResult.Cancel });
+        }
+
+        protected virtual void OnDialogClosed(DialogResultEventArgs e)
+        {
+            DialogClosed?.Invoke(this, e);
+        }
+    }
+
+    public class DocumentProperties
+    {
+        public string ObjectName { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Subject { get; set; }
+        public string Keywords { get; set; }
+        public string Comments { get; set; }
+        public string Category { get; set; }
+        public string Status { get; set; }
+        public string ContentType { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime Modified { get; set; }
+        public DateTime? LastPrinted { get; set; }
+        public int Revision { get; set; }
+        public TimeSpan TotalEditingTime { get; set; }
+        public int Pages { get; set; }
+        public int Words { get; set; }
+        public int Characters { get; set; }
+        public int Lines { get; set; }
+        public int Paragraphs { get; set; }
+        public string Manager { get; set; }
+        public string Company { get; set; }
+        public string HyperlinkBase { get; set; }
+        public List<CustomProperty> CustomProperties { get; set; } = new List<CustomProperty>();
+    }
+
+    public class CustomProperty
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class ContentTypeInfo
+    {
+        public string Extension { get; set; }
+        public string ContentType { get; set; }
+        public string PartName { get; set; }
+    }
+}
+
+<UserControl x:Class="OfficeSuite.Common.Views.ProgressDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="200" d:DesignWidth="450">
+    <UserControl.Resources>
+        <Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="Background" Value="{DynamicResource ProgressBarBackground}"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <Border x:Name="PART_Track">
+                                <Border x:Name="PART_Indicator"
+                                        HorizontalAlignment="Left"
+                                        Background="{TemplateBinding Foreground}"
+                                        CornerRadius="10"/>
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="CancelButtonStyle" TargetType="Button">
+            <Setter Property="Padding" Value="20,8"/>
+            <Setter Property="Margin" Value="0,10,0,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource BorderColor}"
+                                CornerRadius="4"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource HoverBackground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   x:Name="ProgressTitle"
+                   Text="Please Wait..."
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,10"/>
+
+        <TextBlock Grid.Row="1"
+                   x:Name="ProgressMessage"
+                   Text="Processing..."
+                   TextWrapping="Wrap"
+                   Foreground="{DynamicResource SecondaryTextColor}"
+                   Margin="0,0,0,15"/>
+
+        <ProgressBar Grid.Row="2"
+                     x:Name="ProgressBarControl"
+                     Style="{StaticResource ProgressBarStyle}"
+                     Minimum="0"
+                     Maximum="100"
+                     Value="0"/>
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <TextBlock x:Name="ProgressPercentage"
+                       Text="0%"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryColor}"/>
+            <TextBlock Text=" complete"
+                       Foreground="{DynamicResource SecondaryTextColor}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="4"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <Button x:Name="CancelButton"
+                    Content="Cancel"
+                    Style="{StaticResource CancelButtonStyle}"
+                    Click="CancelButton_Click"/>
+
+            <Button x:Name="BackgroundButton"
+                    Content="Run in Background"
+                    Style="{StaticResource CancelButtonStyle}"
+                    Margin="10,10,0,0"
+                    Visibility="Collapsed"
+                    Click="BackgroundButton_Click"/>
+        </StackPanel>
+
+        <CheckBox Grid.Row="4"
+                  x:Name="BackgroundCheckBox"
+                  Content="Don't show this message again"
+                  Margin="0,15,0,0"
+                  Visibility="Collapsed"/>
+    </Grid>
+</UserControl>
+
+namespace OfficeSuite.Common.Views
+{
+    public partial class ProgressDialog : UserControl
+    {
+        private CancellationTokenSource _cancellationTokenSource;
+
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(string), typeof(ProgressDialog),
+                new PropertyMetadata("Please Wait..."));
+
+        public static readonly DependencyProperty MessageProperty =
+            DependencyProperty.Register("Message", typeof(string), typeof(ProgressDialog),
+                new PropertyMetadata("Processing..."));
+
+        public static readonly DependencyProperty ProgressProperty =
+            DependencyProperty.Register("Progress", typeof(double), typeof(ProgressDialog),
+                new PropertyMetadata(0.0, OnProgressChanged));
+
+        public static readonly DependencyProperty IsIndeterminateProperty =
+            DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressDialog),
+                new PropertyMetadata(false));
+
+        public string Title
+        {
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
+        }
+
+        public string Message
+        {
+            get { return (string)GetValue(MessageProperty); }
+            set { SetValue(MessageProperty, value); }
+        }
+
+        public double Progress
+        {
+            get { return (double)GetValue(ProgressProperty); }
+            set { SetValue(ProgressProperty, value); }
+        }
+
+        public bool IsIndeterminate
+        {
+            get { return (bool)GetValue(IsIndeterminateProperty); }
+            set { SetValue(IsIndeterminateProperty, value); }
+        }
+
+        public event EventHandler CancelRequested;
+        public event EventHandler BackgroundRequested;
+
+        public ProgressDialog()
+        {
+            InitializeComponent();
+            _cancellationTokenSource = new CancellationTokenSource();
+        }
+
+        private static void OnProgressChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is ProgressDialog dialog)
+            {
+                dialog.ProgressBarControl.Value = (double)e.NewValue;
+                dialog.ProgressPercentage.Text = $"{(int)(double)e.NewValue}%";
+            }
+        }
+
+        public void UpdateProgress(double progress, string message = null)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Progress = progress;
+                if (message != null)
+                {
+                    Message = message;
+                    ProgressMessage.Text = message;
+                }
+            });
+        }
+
+        public void UpdateMessage(string message)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Message = message;
+                ProgressMessage.Text = message;
+            });
+        }
+
+        public void SetIndeterminate(bool isIndeterminate)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                IsIndeterminate = isIndeterminate;
+                ProgressBarControl.IsIndeterminate = isIndeterminate;
+            });
+        }
+
+        public void ShowBackgroundOption()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                BackgroundCheckBox.Visibility = Visibility.Visible;
+                BackgroundButton.Visibility = Visibility.Visible;
+            });
+        }
+
+        public CancellationToken GetCancellationToken()
+        {
+            return _cancellationTokenSource.Token;
+        }
+
+        public void RequestCancellation()
+        {
+            _cancellationTokenSource.Cancel();
+            CancelRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            RequestCancellation();
+        }
+
+        private void BackgroundButton_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundRequested?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Complete()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Progress = 100;
+                ProgressMessage.Text = "Complete!";
+                CancelButton.IsEnabled = false;
+            });
+        }
+
+        public void Reset()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                Progress = 0;
+                Message = "Processing...";
+                CancelButton.IsEnabled = true;
+            });
+            _cancellationTokenSource = new CancellationTokenSource();
+        }
+    }
+}
+
+<Window x:Class="OfficeSuite.Common.Views.OfficeMessageBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Message"
+        Width="450"
+        Height="200"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        WindowStyle="ToolWindow">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/OfficeSuite.Common;component/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="MessageBoxButtonStyle" TargetType="Button">
+                <Setter Property="MinWidth" Value="90"/>
+                <Setter Property="Padding" Value="15,8"/>
+                <Setter Property="Margin" Value="5,0"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Style>
+
+            <Style x:Key="MessageBoxImageStyle" TargetType="Image">
+                <Setter Property="Width" Value="48"/>
+                <Setter Property="Height" Value="48"/>
+                <Setter Property="Margin" Value="20,0"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image x:Name="MessageImage"
+                   Grid.Column="0"
+                   Style="{StaticResource MessageBoxImageStyle}"/>
+
+            <StackPanel Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Margin="15,0,0,0">
+                <TextBlock x:Name="MessageText"
+                           Text="Message"
+                           TextWrapping="Wrap"
+                           FontSize="14"/>
+                <TextBlock x:Name="DetailText"
+                           Text=""
+                           TextWrapping="Wrap"
+                           FontSize="11"
+                           Foreground="Gray"
+                           Margin="0,10,0,0"
+                           Visibility="Collapsed"/>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1"
+                Background="{DynamicResource FooterBackgroundColor}"
+                Padding="20,15">
+            <StackPanel x:Name="ButtonPanel"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <Button x:Name="OKButton"
+                        Content="OK"
+                        Style="{StaticResource MessageBoxButtonStyle}"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Click="OKButton_Click"/>
+                <Button x:Name="CancelButton"
+                        Content="Cancel"
+                        Style="{StaticResource MessageBoxButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="CancelButton_Click"/>
+                <Button x:Name="YesButton"
+                        Content="Yes"
+                        Style="{StaticResource MessageBoxButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="YesButton_Click"/>
+                <Button x:Name="NoButton"
+                        Content="No"
+                        Style="{StaticResource MessageBoxButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="NoButton_Click"/>
+                <Button x:Name="RetryButton"
+                        Content="Retry"
+                        Style="{StaticResource MessageBoxButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="RetryButton_Click"/>
+                <Button x:Name="IgnoreButton"
+                        Content="Ignore"
+                        Style="{StaticResource MessageBoxButtonStyle}"
+                        Visibility="Collapsed"
+                        Click="IgnoreButton_Click"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
+
+namespace OfficeSuite.Common.Views
+{
+    public partial class OfficeMessageBox : Window
+    {
+        public MessageBoxResult Result { get; private set; } = MessageBoxResult.None;
+
+        public OfficeMessageBox()
+        {
+            InitializeComponent();
+        }
+
+        public static MessageBoxResult Show(string message, string title = "Message",
+            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxImage icon = MessageBoxImage.None)
+        {
+            var msgBox = new OfficeMessageBox
+            {
+                Title = title,
+                MessageText = { Text = message }
+            };
+
+            msgBox.ConfigureButtons(button);
+            msgBox.ConfigureIcon(icon);
+            msgBox.ShowDialog();
+
+            return msgBox.Result;
+        }
+
+        public static Task<MessageBoxResult> ShowAsync(string message, string title = "Message",
+            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxImage icon = MessageBoxImage.None)
+        {
+            return Task.Run(() => Show(message, title, button, icon));
+        }
+
+        private void ConfigureButtons(MessageBoxButton button)
+        {
+            OKButton.Visibility = Visibility.Collapsed;
+            CancelButton.Visibility = Visibility.Collapsed;
+            YesButton.Visibility = Visibility.Collapsed;
+            NoButton.Visibility = Visibility.Collapsed;
+            RetryButton.Visibility = Visibility.Collapsed;
+            IgnoreButton.Visibility = Visibility.Collapsed;
+
+            switch (button)
+            {
+                case MessageBoxButton.OK:
+                    OKButton.Visibility = Visibility.Visible;
+                    Result = MessageBoxResult.OK;
+                    break;
+                case MessageBoxButton.OKCancel:
+                    OKButton.Visibility = Visibility.Visible;
+                    CancelButton.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxButton.YesNo:
+                    YesButton.Visibility = Visibility.Visible;
+                    NoButton.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxButton.YesNoCancel:
+                    YesButton.Visibility = Visibility.Visible;
+                    NoButton.Visibility = Visibility.Visible;
+                    CancelButton.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxButton.AbortRetryIgnore:
+                    YesButton.Content = "Abort";
+                    NoButton.Content = "Retry";
+                    IgnoreButton.Visibility = Visibility.Visible;
+                    YesButton.Visibility = Visibility.Visible;
+                    NoButton.Visibility = Visibility.Visible;
+                    IgnoreButton.Visibility = Visibility.Visible;
+                    OKButton.Visibility = Visibility.Collapsed;
+                    break;
+                case MessageBoxButton.RetryCancel:
+                    RetryButton.Visibility = Visibility.Visible;
+                    CancelButton.Visibility = Visibility.Visible;
+                    OKButton.Visibility = Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        private void ConfigureIcon(MessageBoxImage icon)
+        {
+            string iconPath = null;
+
+            switch (icon)
+            {
+                case MessageBoxImage.Information:
+                    iconPath = "pack://application:,,,/OfficeSuite.Common;component/Resources/Icons/Info.png";
+                    break;
+                case MessageBoxImage.Warning:
+                    iconPath = "pack://application:,,,/OfficeSuite.Common;component/Resources/Icons/Warning.png";
+                    break;
+                case MessageBoxImage.Error:
+                    iconPath = "pack://application:,,,/OfficeSuite.Common;component/Resources/Icons/Error.png";
+                    break;
+                case MessageBoxImage.Question:
+                    iconPath = "pack://application:,,,/OfficeSuite.Common;component/Resources/Icons/Question.png";
+                    break;
+            }
+
+            if (iconPath != null)
+            {
+                try
+                {
+                    MessageImage.Source = new BitmapImage(new Uri(iconPath));
+                    MessageImage.Visibility = Visibility.Visible;
+                }
+                catch
+                {
+                    MessageImage.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                MessageImage.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void OKButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result = MessageBoxResult.OK;
+            DialogResult = true;
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result = MessageBoxResult.Cancel;
+            DialogResult = false;
+            Close();
+        }
+
+        private void YesButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result = MessageBoxResult.Yes;
+            DialogResult = true;
+            Close();
+        }
+
+        private void NoButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result = MessageBoxResult.No;
+            DialogResult = false;
+            Close();
+        }
+
+        private void RetryButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result = MessageBoxResult.Retry;
+            DialogResult = true;
+            Close();
+        }
+
+        private void IgnoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            Result = MessageBoxResult.Ignore;
+            DialogResult = true;
+            Close();
+        }
+    }
+
+    public enum MessageBoxResult
+    {
+        None,
+        OK,
+        Cancel,
+        Yes,
+        No,
+        Retry,
+        Ignore
+    }
+
+    public enum MessageBoxButton
+    {
+        OK,
+        OKCancel,
+        YesNo,
+        YesNoCancel,
+        AbortRetryIgnore,
+        RetryCancel
+    }
+
+    public enum MessageBoxImage
+    {
+        None,
+        Information,
+        Warning,
+        Error,
+        Question
+    }
+}

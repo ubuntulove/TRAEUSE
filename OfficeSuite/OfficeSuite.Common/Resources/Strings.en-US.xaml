@@ -1,0 +1,348 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="AppTitle">OfficeSuite</system:String>
+    <system:String x:Key="AppVersion">Version 1.0.0</system:String>
+    
+    <system:String x:Key="File">File</system:String>
+    <system:String x:Key="Edit">Edit</system:String>
+    <system:String x:Key="View">View</system:String>
+    <system:String x:Key="Insert">Insert</system:String>
+    <system:String x:Key="Format">Format</system:String>
+    <system:String x:Key="Tools">Tools</system:String>
+    <system:String x:Key="Table">Table</system:String>
+    <system:String x:Key="Help">Help</system:String>
+    
+    <system:String x:Key="New">New</system:String>
+    <system:String x:Key="Open">Open</system:String>
+    <system:String x:Key="Save">Save</system:String>
+    <system:String x:Key="SaveAs">Save As</system:String>
+    <system:String x:Key="Close">Close</system:String>
+    <system:String x:Key="Exit">Exit</system:String>
+    <system:String x:Key="Print">Print</system:String>
+    <system:String x:Key="Export">Export</system:String>
+    <system:String x:Key="Publish">Publish</system:String>
+    
+    <system:String x:Key="Undo">Undo</system:String>
+    <system:String x:Key="Redo">Redo</system:String>
+    <system:String x:Key="Cut">Cut</system:String>
+    <system:String x:Key="Copy">Copy</system:String>
+    <system:String x:Key="Paste">Paste</system:String>
+    <system:String x:Key="Delete">Delete</system:String>
+    <system:String x:Key="SelectAll">Select All</system:String>
+    <system:String x:Key="Find">Find</system:String>
+    <system:String x:Key="Replace">Replace</system:String>
+    <system:String x:Key="GoTo">Go To</system:String>
+    
+    <system:String x:Key="Bold">Bold</system:String>
+    <system:String x:Key="Italic">Italic</system:String>
+    <system:String x:Key="Underline">Underline</system:String>
+    <system:String x:Key="Strikethrough">Strikethrough</system:String>
+    <system:String x:Key="Subscript">Subscript</system:String>
+    <system:String x:Key="Superscript">Superscript</system:String>
+    <system:String x:Key="Font">Font</system:String>
+    <system:String x:Key="FontSize">Font Size</system:String>
+    <system:String x:Key="FontColor">Font Color</system:String>
+    <system:String x:Key="Highlight">Highlight</system:String>
+    <system:String x:Key="TextEffects">Text Effects</system:String>
+    <system:String x:Key="ClearFormatting">Clear Formatting</system:String>
+    
+    <system:String x:Key="AlignLeft">Align Left</system:String>
+    <system:String x:Key="AlignCenter">Align Center</system:String>
+    <system:String x:Key="AlignRight">Align Right</system:String>
+    <system:String x:Key="AlignJustify">Justify</system:String>
+    <system:String x:Key="LineSpacing">Line Spacing</system:String>
+    <system:String x:Key="Indent">Indent</system:String>
+    <system:String x:Key="Outdent">Outdent</system:String>
+    <system:String x:Key="Bullets">Bullets</system:String>
+    <system:String x:Key="Numbering">Numbering</system:String>
+    <system:String x:Key="Shading">Shading</system:String>
+    <system:String x:Key="Borders">Borders</system:String>
+    
+    <system:String x:Key="Paragraph">Paragraph</system:String>
+    <system:String x:Key="Styles">Styles</system:String>
+    <system:String x:Key="Themes">Themes</system:String>
+    <system:String x:Key="PageSetup">Page Setup</system:String>
+    <system:String x:Key="Margins">Margins</system:String>
+    <system:String x:Key="Orientation">Orientation</system:String>
+    <system:String x:Key="Portrait">Portrait</system:String>
+    <system:String x:Key="Landscape">Landscape</system:String>
+    <system:String x:Key="Size">Size</system:String>
+    <system:String x:Key="Columns">Columns</system:String>
+    
+    <system:String x:Key="Spelling">Spelling</system:String>
+    <system:String x:Key="Grammar">Grammar</system:String>
+    <system:String x:Key="Thesaurus">Thesaurus</system:String>
+    <system:String x:Key="WordCount">Word Count</system:String>
+    <system:String x:Key="Translate">Translate</system:String>
+    <system:String x:Key="AutoCorrect">AutoCorrect</system:String>
+    <system:String x:Key="Macros">Macros</system:String>
+    <system:String x:Key="Customize">Customize</system:String>
+    <system:String x:Key="Options">Options</system:String>
+    <system:String x:Key="Preferences">Preferences</system:String>
+    
+    <system:String x:Key="InsertPicture">Insert Picture</system:String>
+    <system:String x:Key="InsertTable">Insert Table</system:String>
+    <system:String x:Key="InsertChart">Insert Chart</system:String>
+    <system:String x:Key="InsertShape">Insert Shape</system:String>
+    <system:String x:Key="InsertSmartArt">Insert SmartArt</system:String>
+    <system:String x:Key="InsertLink">Insert Link</system:String>
+    <system:String x:Key="InsertComment">Insert Comment</system:String>
+    <system:String x:Key="InsertDate">Insert Date</system:String>
+    <system:String x:Key="InsertTime">Insert Time</system:String>
+    <system:String x:Key="InsertPageNumber">Insert Page Number</system:String>
+    <system:String x:Key="InsertHeader">Insert Header</system:String>
+    <system:String x:Key="InsertFooter">Insert Footer</system:String>
+    <system:String x:Key="InsertTextBox">Insert Text Box</system:String>
+    <system:String x:Key="InsertWordArt">Insert WordArt</system:String>
+    
+    <system:String x:Key="Zoom">Zoom</system:String>
+    <system:String x:Key="ZoomIn">Zoom In</system:String>
+    <system:String x:Key="ZoomOut">Zoom Out</system:String>
+    <system:String x:Key="FitToWindow">Fit to Window</system:String>
+    <system:String x:Key="FullScreen">Full Screen</system:String>
+    <system:String x:Key="Ruler">Ruler</system:String>
+    <system:String x:Key="Gridlines">Gridlines</system:String>
+    <system:String x:Key="NavigationPane">Navigation Pane</system:String>
+    <system:String x:Key="StatusBar">Status Bar</system:String>
+    <system:String x:Key="TaskPane">Task Pane</system:String>
+    
+    <system:String x:Key="About">About</system:String>
+    <system:String x:Key="HelpContents">Help Contents</system:String>
+    <system:String x:Key="CheckForUpdates">Check for Updates</system:String>
+    <system:String x:Key="Contact">Contact</system:String>
+    <system:String x:Key="Feedback">Feedback</system:String>
+    <system:String x:Key="Privacy">Privacy</system:String>
+    <system:String x:Key="Terms">Terms of Service</system:String>
+    
+    <system:String x:Key="OK">OK</system:String>
+    <system:String x:Key="Cancel">Cancel</system:String>
+    <system:String x:Key="Yes">Yes</system:String>
+    <system:String x:Key="No">No</system:String>
+    <system:String x:Key="Apply">Apply</system:String>
+    <system:String x:Key="CloseButton">Close</system:String>
+    <system:String x:Key="Back">Back</system:String>
+    <system:String x:Key="Next">Next</system:String>
+    <system:String x:Key="Finish">Finish</system:String>
+    <system:String x:Key="SaveChanges">Save Changes?</system:String>
+    <system:String x:Key="UnsavedChanges">You have unsaved changes. Do you want to save them?</system:String>
+    
+    <system:String x:Key="Error">Error</system:String>
+    <system:String x:Key="Warning">Warning</system:String>
+    <system:String x:Key="Information">Information</system:String>
+    <system:String x:Key="Success">Success</system:String>
+    <system:String x:Key="Confirmation">Confirmation</system:String>
+    <system:String x:Key="CriticalError">A critical error has occurred.</system:String>
+    <system:String x:Key="FileNotFound">File not found.</system:String>
+    <system:String x:Key="InvalidFormat">Invalid format.</system:String>
+    <system:String x:Key="OperationFailed">Operation failed.</system:String>
+    <system:String x:Key="AccessDenied">Access denied.</system:String>
+    <system:String x:Key="OutOfMemory">Out of memory.</system:String>
+    <system:String x:Key="DiskFull">Disk is full.</system:String>
+    
+    <system:String x:Key="Document">Document</system:String>
+    <system:String x:Key="Workbook">Workbook</system:String>
+    <system:String x:Key="Presentation">Presentation</system:String>
+    <system:String x:Key="Page">Page</system:String>
+    <system:String x:Key="Section">Section</system:String>
+    <system:String x:Key="Chapter">Chapter</system:String>
+    <system:String x:Key="Title">Title</system:String>
+    <system:String x:Key="Subject">Subject</system:String>
+    <system:String x:Key="Author">Author</system:String>
+    <system:String x:Key="Keywords">Keywords</system:String>
+    <system:String x:Key="Comments">Comments</system:String>
+    <system:String x:Key="Category">Category</system:String>
+    
+    <system:String x:Key="NormalStyle">Normal</system:String>
+    <system:String x:Key="Heading1">Heading 1</system:String>
+    <system:String x:Key="Heading2">Heading 2</system:String>
+    <system:String x:Key="Heading3">Heading 3</system:String>
+    <system:String x:Key="Heading4">Heading 4</system:String>
+    <system:String x:Key="Heading5">Heading 5</system:String>
+    <system:String x:Key="Heading6">Heading 6</system:String>
+    <system:String x:Key="Quote">Quote</system:String>
+    <system:String x:Key="IntenseQuote">Intense Quote</system:String>
+    <system:String x:Key="Caption">Caption</system:String>
+    <system:String x:Key="Footnote">Footnote</system:String>
+    <system:String x:Key="Endnote">Endnote</system:String>
+    
+    <system:String x:Key="Cell">Cell</system:String>
+    <system:String x:Key="Row">Row</system:String>
+    <system:String x:Key="Column">Column</system:String>
+    <system:String x:Key="Sheet">Sheet</system:String>
+    <system:String x:Key="Worksheet">Worksheet</system:String>
+    <system:String x:Key="Range">Range</system:String>
+    <system:String x:Key="Formula">Formula</system:String>
+    <system:String x:Key="Function">Function</system:String>
+    <system:String x:Key="Sum">Sum</system:String>
+    <system:String x:Key="Average">Average</system:String>
+    <system:String x:Key="Count">Count</system:String>
+    <system:String x:Key="Max">Max</system:String>
+    <system:String x:Key="Min">Min</system:String>
+    
+    <system:String x:Key="Slide">Slide</system:String>
+    <system:String x:Key="SlideShow">Slide Show</system:String>
+    <system:String x:Key="Transition">Transition</system:String>
+    <system:String x:Key="Animation">Animation</system:String>
+    <system:String x:Key="Design">Design</system:String>
+    <system:String x:Key="Layout">Layout</system:String>
+    <system:String x:Key="Master">Master</system:String>
+    <system:String x:Key="Notes">Notes</system:String>
+    <system:String x:Key="Handout">Handout</system:String>
+    <system:String x:Key="Outline">Outline</system:String>
+    <system:String x:Key="Sorter">Sorter</system:String>
+    <system:String x:Key="Thumbnail">Thumbnail</system:String>
+    
+    <system:String x:Key="FileName">File Name</system:String>
+    <system:String x:Key="FileType">File Type</system:String>
+    <system:String x:Key="Location">Location</system:String>
+    <system:String x:Key="Size">Size</system:String>
+    <system:String x:Key="Modified">Modified</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="Accessed">Accessed</system:String>
+    <system:String x:Key="ReadOnly">Read Only</system:String>
+    <system:String x:Key="Hidden">Hidden</system:String>
+    <system:String x:Key="System">System</system:String>
+    <system:String x:Key="Archive">Archive</system:String>
+    
+    <system:String x:Key="UndoOperation">Undo: {0}</system:String>
+    <system:String x:Key="RedoOperation">Redo: {0}</system:String>
+    <system:String x:Key="PageOf">Page {0} of {1}</system:String>
+    <system:String x:Key="SlideOf">Slide {0} of {1}</system:String>
+    <system:String x:Key="SelectionInfo">{0} characters selected</system:String>
+    <system:String x:Key="WordsInfo">{0} words</system:String>
+    <system:String x:Key="Ready">Ready</system:String>
+    <system:String x:Key="Busy">Busy...</system:String>
+    <system:String x:Key="Loading">Loading...</system:String>
+    <system:String x:Key="Saving">Saving...</system:String>
+    <system:String x:Key="Printing">Printing...</system:String>
+    
+    <system:String x:Key="RecentDocuments">Recent Documents</system:String>
+    <system:String x:Key="NewDocument">New Document</system:String>
+    <system:String x:Key="Templates">Templates</system:String>
+    <system:String x:Key="BlankDocument">Blank Document</system:String>
+    <system:String x:Key="FromTemplate">From Template</system:String>
+    
+    <system:String x:Key="SelectDestination">Select Destination</system:String>
+    <system:String x:Key="SelectSource">Select Source</system:String>
+    <system:String x:Key="SelectFile">Select File</system:String>
+    <system:String x:Key="SelectFolder">Select Folder</system:String>
+    <system:String x:Key="Browse">Browse</system:String>
+    <system:String x:Key="LookIn">Look in</system:String>
+    <system:String x:Key="FileNameLabel">File name:</system:String>
+    <system:String x:Key="SaveAsType">Save as type:</system:String>
+    
+    <system:String x:Key="CopyToClipboard">Copy to Clipboard</system:String>
+    <system:String x:Key="MoveToClipboard">Move to Clipboard</system:String>
+    <system:String x:Key="ClipboardContains">{0} item(s)</system:String>
+    <system:String x:Key="ClipboardEmpty">Clipboard is empty</system:String>
+    
+    <system:String x:Key="MailMerge">Mail Merge</system:String>
+    <system:String x:Key="SelectRecipients">Select Recipients</system:String>
+    <system:String x:Key="WriteField">Write Field</system:String>
+    <system:String x:Key="PreviewResults">Preview Results</system:String>
+    <system:String x:Key="CompleteMerge">Complete Merge</system:String>
+    
+    <system:String x:Key="CompareDocuments">Compare Documents</system:String>
+    <system:String x:Key="CombineRevisions">Combine Revisions</system:String>
+    <system:String x:Key="TrackChanges">Track Changes</system:String>
+    <system:String x:Key="AcceptChange">Accept Change</system:String>
+    <system:String x:Key="RejectChange">Reject Change</system:String>
+    <system:String x:Key="PreviousChange">Previous Change</system:String>
+    <system:String x:Key="NextChange">Next Change</system:String>
+    
+    <system:String x:Key="ProtectDocument">Protect Document</system:String>
+    <system:String x:Key="RestrictEditing">Restrict Editing</system:String>
+    <system:String x:Key="MarkAsFinal">Mark as Final</system:String>
+    <system:String x:Key="Password">Password</system:String>
+    <system:String x:Key="Encrypt">Encrypt</system:String>
+    <system:String x:Key="Sign">Sign</system:String>
+    <system:String x:Key="AddSignature">Add Signature</system:String>
+    
+    <system:String x:Key="TableOfContents">Table of Contents</system:String>
+    <system:String x:Key="Index">Index</system:String>
+    <system:String x:Key="Bibliography">Bibliography</system:String>
+    <system:String x:Key="CaptionNumbering">Caption Numbering</system:String>
+    <system:String x:Key="InsertIndex">Insert Index</system:String>
+    <system:String x:Key="UpdateIndex">Update Index</system:String>
+    <system:String x:Key="MarkEntry">Mark Entry</system:String>
+    
+    <system:String x:Key="DataSource">Data Source</system:String>
+    <system:String x:Key="Sort">Sort</system:String>
+    <system:String x:Key="Filter">Filter</system:String>
+    <system:String x:Key="Subtotal">Subtotal</system:String>
+    <system:String x:Key="Validation">Validation</system:String>
+    <system:String x:Key="Consolidate">Consolidate</system:String>
+    <system:String x:Key="Group">Group</system:String>
+    <system:String x:Key="Ungroup">Ungroup</system:String>
+    
+    <system:String x:Key="FreezePanes">Freeze Panes</system:String>
+    <system:String x:Key="Split">Split</system:String>
+    <system:String x:Key="Hide">Hide</system:String>
+    <system:String x:Key="Unhide">Unhide</system:String>
+    <system:String x:Key="FormatCells">Format Cells</system:String>
+    <system:String x:Key="ConditionalFormatting">Conditional Formatting</system:String>
+    <system:String x:Key="TableStyles">Table Styles</system:String>
+    
+    <system:String x:Key="StartFromBeginning">Start from Beginning</system:String>
+    <system:String x:Key="PresenterView">Presenter View</system:String>
+    <system:String x:Key="RehearseTimings">Rehearse Timings</system:String>
+    <system:String x:Key="Broadcast">Broadcast</system:String>
+    <system:String x:Key="CustomShow">Custom Show</system:String>
+    <system:String x:Key="HideSlides">Hide Slides</system:String>
+    <system:String x:Key="Pointer">Pointer</system:String>
+    <system:String x:Key="Pen">Pen</system:String>
+    <system:String x:Key="Highlighter">Highlighter</system:String>
+    <system:String x:Key="Eraser">Eraser</system:String>
+    <system:String x:Key="LaserPointer">Laser Pointer</system:String>
+    <system:String x:Key="InkColor">Ink Color</system:String>
+    <system:String x:Key="Thickness">Thickness</system:String>
+    
+    <system:String x:Key="NormalView">Normal</system:String>
+    <system:String x:Key="PrintLayout">Print Layout</system:String>
+    <system:String x:Key="WebLayout">Web Layout</system:String>
+    <system:String x:Key="OutlineView">Outline View</system:String>
+    <system:String x:Key="DraftView">Draft View</system:String>
+    <system:String x:Key="PageBreakPreview">Page Break Preview</system:String>
+    <system:String x:Key="MasterView">Master View</system:String>
+    <system:String x:Key="SlideMasterView">Slide Master</system:String>
+    <system:String x:Key="NotesMasterView">Notes Master</system:String>
+    <system:String x:Key="HandoutMasterView">Handout Master</system:String>
+    
+    <Color x:Key="PrimaryColor">#0078D4</Color>
+    <Color x:Key="SecondaryColor">#106EBE</Color>
+    <Color x:Key="AccentColor">#FFB900</Color>
+    <Color x:Key="BackgroundColor">#FFFFFF</Color>
+    <Color x:Key="ForegroundColor">#323130</Color>
+    <Color x:Key="ErrorColor">#D13438</Color>
+    <Color x:Key="WarningColor">#FFB900</Color>
+    <Color x:Key="SuccessColor">#107C10</Color>
+    <Color x:Key="InfoColor">#0078D4</Color>
+    
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SecondaryColor}"/>
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}"/>
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource ErrorColor}"/>
+    <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
+    <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
+    
+    <system:Double x:Key="SmallFontSize">10</system:Double>
+    <system:Double x:Key="NormalFontSize">12</system:Double>
+    <system:Double x:Key="LargeFontSize">14</system:Double>
+    <system:Double x:Key="HeadingFontSize">18</system:Double>
+    <system:Double x:Key="TitleFontSize">24</system:Double>
+    
+    <Thickness x:Key="SmallMargin">4</Thickness>
+    <Thickness x:Key="NormalMargin">8</Thickness>
+    <Thickness x:Key="LargeMargin">16</Thickness>
+    <Thickness x:Key="ExtraLargeMargin">24</Thickness>
+    
+    <CornerRadius x:Key="SmallRadius">2</CornerRadius>
+    <CornerRadius x:Key="NormalRadius">4</CornerRadius>
+    <CornerRadius x:Key="LargeRadius">8</CornerRadius>
+    
+</ResourceDictionary>

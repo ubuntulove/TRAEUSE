@@ -1,0 +1,834 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Spanish Localization for Office Suite -->
+    
+    <!-- Application -->
+    <system:String x:Key="App_Title">Office Suite</system:String>
+    <system:String x:Key="App_Version">Versión</system:String>
+    <system:String x:Key="App_Copyright">© 2026 Todos los derechos reservados</system:String>
+    
+    <!-- File Menu -->
+    <system:String x:Key="Menu_File">Archivo</system:String>
+    <system:String x:Key="Menu_File_New">Nuevo</system:String>
+    <system:String x:Key="Menu_File_Open">Abrir</system:String>
+    <system:String x:Key="Menu_File_Save">Guardar</system:String>
+    <system:String x:Key="Menu_File_SaveAs">Guardar como</system:String>
+    <system:String x:Key="Menu_File_Close">Cerrar</system:String>
+    <system:String x:Key="Menu_File_Export">Exportar</system:String>
+    <system:String x:Key="Menu_File_Print">Imprimir</system:String>
+    <system:String x:Key="Menu_File_PrintPreview">Vista previa de impresión</system:String>
+    <system:String x:Key="Menu_File_Exit">Salir</system:String>
+    <system:String x:Key="Menu_File_Recent">Documentos recientes</system:String>
+    <system:String x:Key="Menu_File_Properties">Propiedades</system:String>
+    <system:String x:Key="Menu_File_Info">Información del documento</system:String>
+    
+    <!-- Edit Menu -->
+    <system:String x:Key="Menu_Edit">Editar</system:String>
+    <system:String x:Key="Menu_Edit_Undo">Deshacer</system:String>
+    <system:String x:Key="Menu_Edit_Redo">Rehacer</system:String>
+    <system:String x:Key="Menu_Edit_Cut">Cortar</system:String>
+    <system:String x:Key="Menu_Edit_Copy">Copiar</system:String>
+    <system:String x:Key="Menu_Edit_Paste">Pegar</system:String>
+    <system:String x:Key="Menu_Edit_Delete">Eliminar</system:String>
+    <system:String x:Key="Menu_Edit_SelectAll">Seleccionar todo</system:String>
+    <system:String x:Key="Menu_Edit_Find">Buscar</system:String>
+    <system:String x:Key="Menu_Edit_Replace">Reemplazar</system:String>
+    <system:String x:Key="Menu_Edit_GoTo">Ir a</system:String>
+    <system:String x:Key="Menu_Edit_Clipboard">Portapapeles</system:String>
+    
+    <!-- View Menu -->
+    <system:String x:Key="Menu_View">Ver</system:String>
+    <system:String x:Key="Menu_View_Zoom">Zoom</system:String>
+    <system:String x:Key="Menu_View_FullScreen">Pantalla completa</system:String>
+    <system:String x:Key="Menu_View_Normal">Normal</system:String>
+    <system:String x:Key="Menu_View_PrintLayout">Diseño de impresión</system:String>
+    <system:String x:Key="Menu_View_WebLayout">Diseño web</system:String>
+    <system:String x:Key="Menu_View_Outline">Esquema</system:String>
+    <system:String x:Key="Menu_View_Ruler">Regla</system:String>
+    <system:String x:Key="Menu_View_Gridlines">Líneas de cuadrícula</system:String>
+    <system:String x:Key="Menu_View_Navigation">Panel de navegación</system:String>
+    <system:String x:Key="Menu_View_StatusBar">Barra de estado</system:String>
+    <system:String x:Key="Menu_View_Ribbon">Cinta de opciones</system:String>
+    
+    <!-- Insert Menu -->
+    <system:String x:Key="Menu_Insert">Insertar</system:String>
+    <system:String x:Key="Menu_Insert_Table">Tabla</system:String>
+    <system:String x:Key="Menu_Insert_Picture">Imagen</system:String>
+    <system:String x:Key="Menu_Insert_Shape">Forma</system:String>
+    <system:String x:Key="Menu_Insert_Chart">Gráfico</system:String>
+    <system:String x:Key="Menu_Insert_Header">Encabezado</system:String>
+    <system:String x:Key="Menu_Insert_Footer">Pie de página</system:String>
+    <system:String x:Key="Menu_Insert_PageNumber">Número de página</system:String>
+    <system:String x:Key="Menu_Insert_Date">Fecha</system:String>
+    <system:String x:Key="Menu_Insert_Time">Hora</system:String>
+    <system:String x:Key="Menu_Insert_TextBox">Cuadro de texto</system:String>
+    <system:String x:Key="Menu_Insert_Link">Hipervínculo</system:String>
+    <system:String x:Key="Menu_Insert_Bookmark">Marcador</system:String>
+    <system:String x:Key="Menu_Insert_Comment">Comentario</system:String>
+    <system:String x:Key="Menu_Insert_Footnote">Nota al pie</system:String>
+    <system:String x:Key="Menu_Insert_Endnote">Nota final</system:String>
+    
+    <!-- Format Menu -->
+    <system:String x:Key="Menu_Format">Formato</system:String>
+    <system:String x:Key="Menu_Format_Font">Fuente</system:String>
+    <system:String x:Key="Menu_Format_Paragraph">Párrafo</system:String>
+    <system:String x:Key="Menu_Format_Style">Estilo</system:String>
+    <system:String x:Key="Menu_Format_Borders">Bordes</system:String>
+    <system:String x:Key="Menu_Format_Shading">Sombreado</system:String>
+    <system:String x:Key="Menu_Format_Alignment">Alineación</system:String>
+    <system:String x:Key="Menu_Format_Spacing">Espaciado</system:String>
+    <system:String x:Key="Menu_Format_Indentation">Sangría</system:String>
+    <system:String x:Key="Menu_Format_Lists">Viñetas</system:String>
+    <system:String x:Key="Menu_Format_Numbering">Numeración</system:String>
+    
+    <!-- Layout Menu -->
+    <system:String x:Key="Menu_Layout">Diseño</system:String>
+    <system:String x:Key="Menu_Layout_PageSetup">Configurar página</system:String>
+    <system:String x:Key="Menu_Layout_Margins">Márgenes</system:String>
+    <system:String x:Key="Menu_Layout_Orientation">Orientación</system:String>
+    <system:String x:Key="Menu_Layout_PaperSize">Tamaño de papel</system:String>
+    <system:String x:Key="Menu_Layout_Columns">Columnas</system:String>
+    <system:String x:Key="Menu_Layout_Breaks">Saltos</system:String>
+    <system:String x:Key="Menu_Layout_LineNumbers">Números de línea</system:String>
+    
+    <!-- Table Menu -->
+    <system:String x:Key="Menu_Table">Tabla</system:String>
+    <system:String x:Key="Menu_Table_Insert">Insertar tabla</system:String>
+    <system:String x:Key="Menu_Table_Draw">Dibujar tabla</system:String>
+    <system:String x:Key="Menu_Table_Convert">Convertir en tabla</system:String>
+    <system:String x:Key="Menu_Table_Select">Seleccionar</system:String>
+    <system:String x:Key="Menu_Table_Rows">Filas</system:String>
+    <system:String x:Key="Menu_Table_Columns">Columnas</system:String>
+    <system:String x:Key="Menu_Table_Cells">Celdas</system:String>
+    <system:String x:Key="Menu_Table_Merge">Combinar celdas</system:String>
+    <system:String x:Key="Menu_Table_Split">Dividir celdas</system:String>
+    <system:String x:Key="Menu_Table_Delete">Eliminar</system:String>
+    <system:String x:Key="Menu_Table_Properties">Propiedades de la tabla</system:String>
+    <system:String x:Key="Menu_Table_Sort">Ordenar</system:String>
+    <system:String x:Key="Menu_Table_Formula">Fórmula</system:String>
+    
+    <!-- Review Menu -->
+    <system:String x:Key="Menu_Review">Revisar</system:String>
+    <system:String x:Key="Menu_Review_Spelling">Ortografía</system:String>
+    <system:String x:Key="Menu_Review_Thesaurus">Sinónimos</system:String>
+    <system:String x:Key="Menu_Review_Translate">Traducir</system:String>
+    <system:String x:Key="Menu_Review_Comments">Comentarios</system:String>
+    <system:String x:Key="Menu_Review_TrackChanges">Control de cambios</system:String>
+    <system:String x:Key="Menu_Review_Accept">Aceptar</system:String>
+    <system:String x:Key="Menu_Review_Reject">Rechazar</system:String>
+    <system:String x:Key="Menu_Review_Compare">Comparar</system:String>
+    <system:String x:Key="Menu_Review_Protect">Proteger</system:String>
+    
+    <!-- Mail Menu -->
+    <system:String x:Key="Menu_Mail">Correspondencia</system:String>
+    <system:String x:Key="Menu_Mail_SelectRecipients">Seleccionar destinatarios</system:String>
+    <system:String x:Key="Menu_Mail_WriteFields">Escribir campos</system:String>
+    <system:String x:Key="Menu_Mail_PreviewResults">Obtener vista previa de los resultados</system:String>
+    <system:String x:Key="Menu_Mail_FinishMerge">Terminar y combinar</system:String>
+    <system:String x:Key="Menu_Mail_Labels">Etiquetas</system:String>
+    <system:String x:Key="Menu_Mail_Envelopes">Sobres</system:String>
+    <system:String x:Key="Menu_Mail_Letters">Cartas</system:String>
+    <system:String x:Key="Menu_Mail_Email">Correo electrónico</system:String>
+    <system:String x:Key="Menu_Mail_Fax">Fax</system:String>
+    
+    <!-- Data Menu -->
+    <system:String x:Key="Menu_Data">Datos</system:String>
+    <system:String x:Key="Menu_Data_Sort">Ordenar</system:String>
+    <system:String x:Key="Menu_Data_Filter">Filtrar</system:String>
+    <system:String x:Key="Menu_Data_Subtotal">Subtotales</system:String>
+    <system:String x:Key="Menu_Data_Validation">Validación de datos</system:String>
+    <system:String x:Key="Menu_Data_Group">Agrupar</system:String>
+    <system:String x:Key="Menu_Data_Ungroup">Desagrupar</system:String>
+    <system:String x:Key="Menu_Data_Consolidate">Consolidar</system:String>
+    <system:String x:Key="Menu_Data_WhatIf">Análisis de hipótesis</system:String>
+    <system:String x:Key="Menu_Data_PivotTable">Tabla dinámica</system:String>
+    <system:String x:Key="Menu_Data_Connections">Conexiones</system:String>
+    <system:String x:Key="Menu_Data_Refresh">Actualizar</system:String>
+    
+    <!-- Formulas Menu -->
+    <system:String x:Key="Menu_Formulas">Fórmulas</system:String>
+    <system:String x:Key="Menu_Formulas_Insert">Insertar función</system:String>
+    <system:String x:Key="Menu_Formulas_AutoSum">Suma automática</system:String>
+    <system:String x:Key="Menu_Formulas_RecentlyUsed">Usadas recientemente</system:String>
+    <system:String x:Key="Menu_Formulas_Financial">Financieras</system:String>
+    <system:String x:Key="Menu_Formulas_Logical">Lógicas</system:String>
+    <system:String x:Key="Menu_Formulas_Text">Texto</system:String>
+    <system:String x:Key="Menu_Formulas_DateTime">Fecha y hora</system:String>
+    <system:String x:Key="Menu_Formulas_Math">Matemáticas</system:String>
+    <system:String x:Key="Menu_Formulas_More">Más funciones</system:String>
+    <system:String x:Key="Menu_Formulas_NameManager">Administrador de nombres</system:String>
+    <system:String x:Key="Menu_Formulas_TraceDependents">Rastrear precedentes</system:String>
+    <system:String x:Key="Menu_Formulas_TracePrecedents">Rastrear dependientes</system:String>
+    <system:String x:Key="Menu_Formulas_RemoveArrows">Quitar flechas</system:String>
+    <system:String x:Key="Menu_Formulas_ShowFormulas">Mostrar fórmulas</system:String>
+    <system:String x:Key="Menu_Formulas_ErrorChecking">Comprobación de errores</system:String>
+    
+    <!-- Home Tab -->
+    <system:String x:Key="Tab_Home">Inicio</system:String>
+    <system:String x:Key="Tab_Insert">Insertar</system:String>
+    <system:String x:Key="Tab_PageLayout">Diseño de página</system:String>
+    <system:String x:Key="Tab_Formulas">Fórmulas</system:String>
+    <system:String x:Key="Tab_Data">Datos</system:String>
+    <system:String x:Key="Tab_Review">Revisar</system:String>
+    <system:String x:Key="Tab_View">Ver</system:String>
+    
+    <!-- Clipboard Group -->
+    <system:String x:Key="Group_Clipboard">Portapapeles</system:String>
+    <system:String x:Key="Group_Font">Fuente</system:String>
+    <system:String x:Key="Group_Paragraph">Párrafo</system:String>
+    <system:String x:Key="Group_Styles">Estilos</system:String>
+    <system:String x:Key="Group_Editing">Edición</system:String>
+    
+    <!-- Alignment -->
+    <system:String x:Key="Align_Left">Alinear a la izquierda</system:String>
+    <system:String x:Key="Align_Center">Centrar</system:String>
+    <system:String x:Key="Align_Right">Alinear a la derecha</system:String>
+    <system:String x:Key="Align_Justify">Justificar</system:String>
+    
+    <!-- Font Styles -->
+    <system:String x:Key="Font_Bold">Negrita</system:String>
+    <system:String x:Key="Font_Italic">Cursiva</system:String>
+    <system:String x:Key="Font_Underline">Subrayado</system:String>
+    <system:String x:Key="Font_Strike">Tachado</system:String>
+    <system:String x:Key="Font_Subscript">Subíndice</system:String>
+    <system:String x:Key="Font_Superscript">Superíndice</system:String>
+    <system:String x:Key="Font_ChangeCase">Cambiar mayúsculas y minúsculas</system:String>
+    <system:String x:Key="Font_Highlight">Resaltado</system:String>
+    <system:String x:Key="Font_Color">Color de fuente</system:String>
+    
+    <!-- Common Actions -->
+    <system:String x:Key="Action_OK">Aceptar</system:String>
+    <system:String x:Key="Action_Cancel">Cancelar</system:String>
+    <system:String x:Key="Action_Apply">Aplicar</system:String>
+    <system:String x:Key="Action_Close">Cerrar</system:String>
+    <system:String x:Key="Action_Help">Ayuda</system:String>
+    <system:String x:Key="Action_Yes">Sí</system:String>
+    <system:String x:Key="Action_No">No</system:String>
+    <system:String x:Key="Action_Retry">Reintentar</system:String>
+    <system:String x:Key="Action_Ignore">Omitir</system:String>
+    
+    <!-- Dialog Titles -->
+    <system:String x:Key="Dialog_Open">Abrir</system:String>
+    <system:String x:Key="Dialog_Save">Guardar</system:String>
+    <system:String x:Key="Dialog_Print">Imprimir</system:String>
+    <system:String x:Key="Dialog_Find">Buscar</system:String>
+    <system:String x:Key="Dialog_Replace">Reemplazar</system:String>
+    <system:String x:Key="Dialog_GoTo">Ir a</system:String>
+    <system:String x:Key="Dialog_Options">Opciones</system:String>
+    <system:String x:Key="Dialog_Settings">Configuración</system:String>
+    <system:String x:Key="Dialog_About">Acerca de</system:String>
+    <system:String x:Key="Dialog_Error">Error</system:String>
+    <system:String x:Key="Dialog_Warning">Advertencia</system:String>
+    <system:String x:Key="Dialog_Info">Información</system:String>
+    <system:String x:Key="Dialog_Confirm">Confirmar</system:String>
+    <system:String x:Key="Dialog_PageSetup">Configurar página</system:String>
+    <system:String x:Key="Dialog_Font">Fuente</system:String>
+    <system:String x:Key="Dialog_Paragraph">Párrafo</system:String>
+    <system:String x:Key="Dialog_Borders">Bordes y sombreado</system:String>
+    <system:String x:Key="Dialog_Styles">Estilos</system:String>
+    <system:String x:Key="Dialog_FormatTable">Dar formato a tabla</system:String>
+    <system:String x:Key="Dialog_Sort">Ordenar</system:String>
+    <system:String x:Key="Dialog_Filter">Filtrar</system:String>
+    <system:String x:Key="Dialog_DataValidation">Validación de datos</system:String>
+    <system:String x:Key="Dialog_ConditionalFormat">Formato condicional</system:String>
+    <system:String x:Key="Dialog_InsertFunction">Insertar función</system:String>
+    <system:String x:Key="Dialog_NameManager">Administrador de nombres</system:String>
+    <system:String x:Key="Dialog_CreateTable">Crear tabla</system:String>
+    <system:String x:Key="Dialog_PivotTable">Crear tabla dinámica</system:String>
+    <system:String x:Key="Dialog_Chart">Insertar gráfico</system:String>
+    <system:String x:Key="Dialog_Sparklines">Mini gráficos</system:String>
+    <system:String x:Key="Dialog_Hyperlink">Hipervínculo</system:String>
+    <system:String x:Key="Dialog_Bookmark">Marcador</system:String>
+    <system:String x:Key="Dialog_Comment">Insertar comentario</system:String>
+    <system:String x:Key="Dialog_TrackChanges">Control de cambios</system:String>
+    <system:String x:Key="Dialog_ProtectDocument">Proteger documento</system:String>
+    <system:String x:Key="Dialog_MailMerge">Combinación de correspondencia</system:String>
+    <system:String x:Key="Dialog_Translate">Traducir</system:String>
+    
+    <!-- Status Messages -->
+    <system:String x:Key="Status_Ready">Listo</system:String>
+    <system:String x:Key="Status_Saving">Guardando...</system:String>
+    <system:String x:Key="Status_Loading">Cargando...</system:String>
+    <system:String x:Key="Status_Printing">Imprimiendo...</system:String>
+    <system:String x:Key="Status_SpellCheck">Revisando ortografía...</system:String>
+    <system:String x:Key="Status_Updating">Actualizando...</system:String>
+    <system:String x:Key="Status_Calculating">Calculando...</system:String>
+    <system:String x:Key="Status_Searching">Buscando...</system:String>
+    <system:String x:Key="Status_Processing">Procesando...</system:String>
+    <system:String x:Key="Status_Complete">Completado</system:String>
+    <system:String x:Key="Status_Error">Error producido</system:String>
+    <system:String x:Key="Status_Warning">Advertencia</system:String>
+    
+    <!-- Error Messages -->
+    <system:String x:Key="Error_FileNotFound">Archivo no encontrado</system:String>
+    <system:String x:Key="Error_FileCorrupt">Archivo dañado</system:String>
+    <system:String x:Key="Error_FileReadOnly">Archivo de solo lectura</system:String>
+    <system:String x:Key="Error_FileLocked">Archivo bloqueado</system:String>
+    <system:String x:Key="Error_InsufficientMemory">Memoria insuficiente</system:String>
+    <system:String x:Key="Error_DiskFull">Disco lleno</system:String>
+    <system:String x:Key="Error_InvalidFormat">Formato no válido</system:String>
+    <system:String x:Key="Error_UnsupportedFormat">Formato no compatible</system:String>
+    <system:String x:Key="Error_ExportFailed">Error al exportar</system:String>
+    <system:String x:Key="Error_ImportFailed">Error al importar</system:String>
+    <system:String x:Key="Error_SaveFailed">Error al guardar</system:String>
+    <system:String x:Key="Error_OpenFailed">Error al abrir</system:String>
+    <system:String x:Key="Error_PrintFailed">Error al imprimir</system:String>
+    <system:String x:Key="Error_FormulaError">Error de fórmula</system:String>
+    <system:String x:Key="Error_CircularReference">Referencia circular</system:String>
+    <system:String x:Key="Error_CircularReferenceWarning">Advertencia: referencia circular detectada</system:String>
+    
+    <!-- Confirm Messages -->
+    <system:String x:Key="Confirm_SaveChanges">¿Desea guardar los cambios?</system:String>
+    <system:String x:Key="Confirm_CloseDocument">¿Desea cerrar el documento?</system:String>
+    <system:String x:Key="Confirm_Delete">¿Está seguro de que desea eliminar este elemento?</system:String>
+    <system:String x:Key="Confirm_Replace">¿Desea realizar este reemplazo?</system:String>
+    <system:String x:Key="Confirm_Overwrite">¿Desea reemplazar este archivo?</system:String>
+    <system:String x:Key="Confirm_DiscardChanges">¿Desea descartar los cambios?</system:String>
+    <system:String x:Key="Confirm_ClearFormat">¿Desea borrar el formato?</system:String>
+    <system:String x:Key="Confirm_ResetSettings">¿Desea restablecer la configuración?</system:String>
+    
+    <!-- File Filters -->
+    <system:String x:Key="Filter_AllFiles">Todos los archivos</system:String>
+    <system:String x:Key="Filter_Documents">Documentos</system:String>
+    <system:String x:Key="Filter_Spreadsheets">Hojas de cálculo</system:String>
+    <system:String x:Key="Filter_Presentations">Presentaciones</system:String>
+    <system:String x:Key="Filter_TextFiles">Archivos de texto</system:String>
+    <system:String x:Key="Filter_HTML">Archivos HTML</system:String>
+    <system:String x:Key="Filter_PDF">Archivos PDF</system:String>
+    <system:String x:Key="Filter_RTF">Archivos RTF</system:String>
+    <system:String x:Key="Filter_CSV">Archivos CSV</system:String>
+    <system:String x:Key="Filter_XML">Archivos XML</system:String>
+    <system:String x:Key="Filter_Images">Archivos de imagen</system:String>
+    
+    <!-- Document Types -->
+    <system:String x:Key="DocType_Word">Documento de Word</system:String>
+    <system:String x:Key="DocType_Excel">Libro de Excel</system:String>
+    <system:String x:Key="DocType_PowerPoint">Presentación de PowerPoint</system:String>
+    <system:String x:Key="DocType_Text">Documento de texto</system:String>
+    <system:String x:Key="DocType_Web">Página web</system:String>
+    <system:String x:Key="DocType_Template">Plantilla</system:String>
+    
+    <!-- Paper Sizes -->
+    <system:String x:Key="Paper_A4">A4</system:String>
+    <system:String x:Key="Paper_A3">A3</system:String>
+    <system:String x:Key="Paper_A5">A5</system:String>
+    <system:String x:Key="Paper_Letter">Carta</system:String>
+    <system:String x:Key="Paper_Legal">Oficio</system:String>
+    <system:String x:Key="Paper_Tabloid">Doble carta</system:String>
+    <system:String x:Key="Paper_Custom">Personalizado</system:String>
+    
+    <!-- Page Orientation -->
+    <system:String x:Key="Orientation_Portrait">Vertical</system:String>
+    <system:String x:Key="Orientation_Landscape">Horizontal</system:String>
+    
+    <!-- Margins -->
+    <system:String x:Key="Margin_Normal">Normal</system:String>
+    <system:String x:Key="Margin_Narrow">Estrecho</system:String>
+    <system:String x:Key="Margin_Wide">Ancho</system:String>
+    <system:String x:Key="Margin_Mirrored">Espejo</system:String>
+    <system:String x:Key="Margin_Top">Superior</system:String>
+    <system:String x:Key="Margin_Bottom">Inferior</system:String>
+    <system:String x:Key="Margin_Left">Izquierdo</system:String>
+    <system:String x:Key="Margin_Right">Derecho</system:String>
+    <system:String x:Key="Margin_Header">Encabezado</system:String>
+    <system:String x:Key="Margin_Footer">Pie de página</system:String>
+    
+    <!-- Zoom Options -->
+    <system:String x:Key="Zoom_FitToWindow">Ajustar a ventana</system:String>
+    <system:String x:Key="Zoom_FitToPage">Ajustar a página</system:String>
+    <system:String x:Key="Zoom_FitToWidth">Ajustar a ancho</system:String>
+    <system:String x:Key="Zoom_100">100%</system:String>
+    <system:String x:Key="Zoom_75">75%</system:String>
+    <system:String x:Key="Zoom_50">50%</system:String>
+    <system:String x:Key="Zoom_25">25%</system:String>
+    <system:String x:Key="Zoom_200">200%</system:String>
+    <system:String x:Key="Zoom_Custom">Personalizado</system:String>
+    
+    <!-- Spreadsheet Specific -->
+    <system:String x:Key="Spreadsheet_Cell">Celda</system:String>
+    <system:String x:Key="Spreadsheet_Row">Fila</system:String>
+    <system:String x:Key="Spreadsheet_Column">Columna</system:String>
+    <system:String x:Key="Spreadsheet_Sheet">Hoja de cálculo</system:String>
+    <system:String x:Key="Spreadsheet_Workbook">Libro</system:String>
+    <system:String x:Key="Spreadsheet_SheetName">Nombre de hoja</system:String>
+    <system:String x:Key="Spreadsheet_InsertSheet">Insertar hoja</system:String>
+    <system:String x:Key="Spreadsheet_DeleteSheet">Eliminar hoja</system:String>
+    <system:String x:Key="Spreadsheet_RenameSheet">Cambiar nombre de hoja</system:String>
+    <system:String x:Key="Spreadsheet_MoveSheet">Mover hoja</system:String>
+    <system:String x:Key="Spreadsheet_CopySheet">Copiar hoja</system:String>
+    <system:String x:Key="Spreadsheet_HideSheet">Ocultar hoja</system:String>
+    <system:String x:Key="Spreadsheet_UnhideSheet">Mostrar hoja</system:String>
+    <system:String x:Key="Spreadsheet_TabColor">Color de pestaña</system:String>
+    <system:String x:Key="Spreadsheet_FreezePanes">Inmovilizar paneles</system:String>
+    <system:String x:Key="Spreadsheet_SplitWindow">Dividir ventana</system:String>
+    
+    <!-- Presentation Specific -->
+    <system:String x:Key="Presentation_Slide">Diapositiva</system:String>
+    <system:String x:Key="Presentation_SlideMaster">Patrón de diapositivas</system:String>
+    <system:String x:Key="Presentation_Layout">Diseño</system:String>
+    <system:String x:Key="Presentation_Theme">Tema</system:String>
+    <system:String x:Key="Presentation_Transition">Transición</system:String>
+    <system:String x:Key="Presentation_Animation">Animación</system:String>
+    <system:String x:Key="Presentation_NewSlide">Nueva diapositiva</system:String>
+    <system:String x:Key="Presentation_DuplicateSlide">Duplicar diapositiva</system:String>
+    <system:String x:Key="Presentation_DeleteSlide">Eliminar diapositiva</system:String>
+    <system:String x:Key="Presentation_HideSlide">Ocultar diapositiva</system:String>
+    <system:String x:Key="Presentation_SlideNumber">Número de diapositiva</system:String>
+    <system:String x:Key="Presentation_Header">Encabezado</system:String>
+    <system:String x:Key="Presentation_Footer">Pie de página</system:String>
+    
+    <!-- Word Specific -->
+    <system:String x:Key="Word_Section">Sección</system:String>
+    <system:String x:Key="Word_Page">Página</system:String>
+    <system:String x:Key="Word_Line">Línea</system:String>
+    <system:String x:Key="Word_Word">Palabra</system:String>
+    <system:String x:Key="Word_Character">Carácter</system:String>
+    <system:String x:Key="Word_Paragraph">Párrafo</system:String>
+    <system:String x:Key="Word_Sentence">Oración</system:String>
+    <system:String x:Key="Word_Select">Selección</system:String>
+    <system:String x:Key="Word_All">Todo</system:String>
+    <system:String x:Key="Word_From">De</system:String>
+    <system:String x:Key="Word_To">Hasta</system:String>
+    
+    <!-- Spell Check -->
+    <system:String x:Key="Spell_NotInDictionary">No está en el diccionario</system:String>
+    <system:String x:Key="Spell_Suggestions">Sugerencias</system:String>
+    <system:String x:Key="Spell_Ignore">Omitir</system:String>
+    <system:String x:Key="Spell_IgnoreAll">Omitir todo</system:String>
+    <system:String x:Key="Spell_Add">Agregar al diccionario</system:String>
+    <system:String x:Key="Spell_Change">Cambiar</system:String>
+    <system:String x:Key="Spell_ChangeAll">Cambiar todo</system:String>
+    <system:String x:Key="Spell_Undo">Deshacer</system:String>
+    <system:String x:Key="Spell_CheckDocument">Revisar documento</system:String>
+    <system:String x:Key="Spell_CheckGrammar">Revisar gramática</system:String>
+    <system:String x:Key="Spell_AutoCorrect">Corrección automática</system:String>
+    <system:String x:Key="Spell_Language">Idioma</system:String>
+    
+    <!-- Find and Replace -->
+    <system:String x:Key="Find_FindWhat">Buscar</system:String>
+    <system:String x:Key="Find_ReplaceWith">Reemplazar con</system:String>
+    <system:String x:Key="Find_FindNext">Buscar siguiente</system:String>
+    <system:String x:Key="Find_Replace">Reemplazar</system:String>
+    <system:String x:Key="Find_ReplaceAll">Reemplazar todo</system:String>
+    <system:String x:Key="Find_MatchCase">Coincidir mayúsculas y minúsculas</system:String>
+    <system:String x:Key="Find_WholeWord">Palabra completa</system:String>
+    <system:String x:Key="Find_UseWildcards">Comodines</system:String>
+    <system:String x:Key="Find_Format">Formato</system:String>
+    <system:String x:Key="Find_Special">Caracteres especiales</system:String>
+    <system:String x:Key="Find_FindIn">Buscar en</system:String>
+    <system:String x:Key="Find_Direction">Dirección</system:String>
+    <system:String x:Key="Find_Up">Arriba</system:String>
+    <system:String x:Key="Find_Down">Abajo</system:String>
+    
+    <!-- Tools Menu -->
+    <system:String x:Key="Menu_Tools">Herramientas</system:String>
+    <system:String x:Key="Menu_Tools_Spelling">Ortografía</system:String>
+    <system:String x:Key="Menu_Tools_Macros">Macros</system:String>
+    <system:String x:Key="Menu_Tools_Customize">Personalizar</system:String>
+    <system:String x:Key="Menu_Tools_Options">Opciones</system:String>
+    <system:String x:Key="Menu_Tools_Protect">Proteger</system:String>
+    <system:String x:Key="Menu_Tools_RestrictEditing">Restringir edición</system:String>
+    <system:String x:Key="Menu_Tools_Language">Idioma</system:String>
+    <system:String x:Key="Menu_Tools_AutoCorrect">Corrección automática</system:String>
+    <system:String x:Key="Menu_Tools_TrackChanges">Control de cambios</system:String>
+    
+    <!-- Window Menu -->
+    <system:String x:Key="Menu_Window">Ventana</system:String>
+    <system:String x:Key="Menu_Window_NewWindow">Nueva ventana</system:String>
+    <system:String x:Key="Menu_Window_Arrange">Organizar</system:String>
+    <system:String x:Key="Menu_Window_Split">Dividir</system:String>
+    <system:String x:Key="Menu_Window_Compare">Comparar</system:String>
+    <system:String x:Key="Menu_Window_SideBySide">En paralelo</system:String>
+    <system:String x:Key="Menu_Window_SyncScrolling">Desplazamiento sincronizado</system:String>
+    
+    <!-- Help Menu -->
+    <system:String x:Key="Menu_Help">Ayuda</system:String>
+    <system:String x:Key="Menu_Help_Help">Ayuda de Office</system:String>
+    <system:String x:Key="Menu_Help_WhatsNew">Novedades</system:String>
+    <system:String x:Key="Menu_Help_Tutorials">Tutoriales</system:String>
+    <system:String x:Key="Menu_Help_Support">Soporte técnico</system:String>
+    <system:String x:Key="Menu_Help_Feedback">Comentarios</system:String>
+    <system:String x:Key="Menu_Help_CheckUpdates">Buscar actualizaciones</system:String>
+    <system:String x:Key="Menu_Help_About">Acerca de Office Suite</system:String>
+    <system:String x:Key="Menu_Help_Contact">Contacto</system:String>
+    <system:String x:Key="Menu_Help_Legal">Avisos legales</system:String>
+    <system:String x:Key="Menu_Help_Privacy">Privacidad</system:String>
+    
+    <!-- Chart Types -->
+    <system:String x:Key="Chart_Column">Gráfico de columnas</system:String>
+    <system:String x:Key="Chart_Bar">Gráfico de barras</system:String>
+    <system:String x:Key="Chart_Line">Gráfico de líneas</system:String>
+    <system:String x:Key="Chart_Pie">Gráfico circular</system:String>
+    <system:String x:Key="Chart_Area">Gráfico de áreas</system:String>
+    <system:String x:Key="Chart_Scatter">Gráfico de dispersión</system:String>
+    <system:String x:Key="Chart_Stock">Gráfico de cotizaciones</system:String>
+    <system:String x:Key="Chart_Surface">Gráfico de superficie</system:String>
+    <system:String x:Key="Chart_Doughnut">Gráfico de anillos</system:String>
+    <system:String x:Key="Chart_Radar">Gráfico radial</system:String>
+    <system:String x:Key="Chart_Combo">Gráfico combinado</system:String>
+    <system:String x:Key="Chart_Treemap">Mapa de árbol</system:String>
+    <system:String x:Key="Chart_Sunburst">Anillo solar</system:String>
+    <system:String x:Key="Chart_Histogram">Histograma</system:String>
+    <system:String x:Key="Chart_BoxPlot">Caja y bigotes</system:String>
+    <system:String x:Key="Chart_Waterfall">Cascada</system:String>
+    <system:String x:Key="Chart_Funnel">Embudo</system:String>
+    <system:String x:Key="Chart_Map">Mapa</system:String>
+    
+    <!-- Animation Effects -->
+    <system:String x:Key="Anim_Entrance">Entrada</system:String>
+    <system:String x:Key="Anim_Exit">Salida</system:String>
+    <system:String x:Key="Anim_Emphasis">Énfasis</system:String>
+    <system:String x:Key="Anim_Motion">Caminos de movimiento</system:String>
+    <system:String x:Key="Anim_Fade">Desvanecer</system:String>
+    <system:String x:Key="Anim_FlyIn">Entrar volando</system:String>
+    <system:String x:Key="Anim_FlyOut">Salir volando</system:String>
+    <system:String x:Key="Anim_Zoom">Zoom</system:String>
+    <system:String x:Key="Anim_Rotate">Girar</system:String>
+    <system:String x:Key="Anim_Wipe">Barrido</system:String>
+    <system:String x:Key="Anim_Reveal">Revelar</system:String>
+    <system:String x:Key="Anim_Pulse">Pulso</system:String>
+    <system:String x:Key="Anim_GrowAndTurn">Crecer y girar</system:String>
+    <system:String x:Key="Anim_Bounce">Rebote</system:String>
+    <system:String x:Key="Anim_Spin">Rotar</system:String>
+    <system:String x:Key="Anim_CreditRoll">Créditos</system:String>
+    <system:String x:Key="Anim_FadeThrough">Desvanecer a través de</system:String>
+    
+    <!-- Transitions -->
+    <system:String x:Key="Trans_None">Ninguna</system:String>
+    <system:String x:Key="Trans_Fade">Desvanecer</system:String>
+    <system:String x:Key="Trans_FadeThroughBlack">Desvanecer a negro</system:String>
+    <system:String x:Key="Trans_Wipe">Barrido</system:String>
+    <system:String x:Key="Trans_Push">Empujar</system:String>
+    <system:String x:Key="Trans_Cover">Descubrir</system:String>
+    <system:String x:Key="Trans_Reveal">Revelar</system:String>
+    <system:String x:Key="Trans_Blind">Persiana</system:String>
+    <system:String x:Key="Trans_Checkerboard">Ajedrez</system:String>
+    <system:String x:Key="Trans_Circle">Círculo</system:String>
+    <system:String x:Key="Trans_Diamond">Diamante</system:String>
+    <system:String x:Key="Trans_FigureEight">Figura ocho</system:String>
+    <system:String x:Key="Trans_Glitter">Brillo</system:String>
+    <system:String x:Key="Trans_Horizontal">Horizontal</system:String>
+    <system:String x:Key="Trans_Vertical">Vertical</system:String>
+    <system:String x:Key="Trans_Rotate">Girar</system:String>
+    <system:String x:Key="Trans_Split">Dividir</system:String>
+    <system:String x:Key="Trans_Strips">Tiras</system:String>
+    <system:String x:Key="Trans_Pan">Deslizar</system:String>
+    <system:String x:Key="Trans_Crop">Recortar</system:String>
+    
+    <!-- Table Styles -->
+    <system:String x:Key="TableStyle_None">Ninguno</system:String>
+    <system:String x:Key="TableStyle_Light">Claro</system:String>
+    <system:String x:Key="TableStyle_Medium">Medio</system:String>
+    <system:String x:Key="TableStyle_Dark">Oscuro</system:String>
+    <system:String x:Key="TableStyle_Accent1">Acento 1</system:String>
+    <system:String x:Key="TableStyle_Accent2">Acento 2</system:String>
+    <system:String x:Key="TableStyle_Accent3">Acento 3</system:String>
+    <system:String x:Key="TableStyle_Accent4">Acento 4</system:String>
+    <system:String x:Key="TableStyle_Accent5">Acento 5</system:String>
+    <system:String x:Key="TableStyle_Accent6">Acento 6</system:String>
+    <system:String x:Key="TableStyle_Custom">Personalizado</system:String>
+    
+    <!-- Shape Types -->
+    <system:String x:Key="Shape_Rectangle">Rectángulo</system:String>
+    <system:String x:Key="Shape_Square">Cuadrado</system:String>
+    <system:String x:Key="Shape_RoundedRectangle">Rectángulo redondeado</system:String>
+    <system:String x:Key="Shape_Oval">Óvalo</system:String>
+    <system:String x:Key="Shape_Circle">Círculo</system:String>
+    <system:String x:Key="Shape_Triangle">Triángulo</system:String>
+    <system:String x:Key="Shape_RightTriangle">Triángulo rectángulo</system:String>
+    <system:String x:Key="Shape_Diamond">Diamante</system:String>
+    <system:String x:Key="Shape_Pentagon">Pentágono</system:String>
+    <system:String x:Key="Shape_Hexagon">Hexágono</system:String>
+    <system:String x:Key="Shape_Heptagon">Heptágono</system:String>
+    <system:String x:Key="Shape_Octagon">Octágono</system:String>
+    <system:String x:Key="Shape_Star">Estrella</system:String>
+    <system:String x:Key="Shape_Arrow">Flecha</system:String>
+    <system:String x:Key="Shape_Callout">Llamada</system:String>
+    <system:String x:Key="Shape_Banner">Banner</system:String>
+    <system:String x:Key="Shape_Cross">Cruz</system:String>
+    <system:String x:Key="Shape_Crescent">Creciente</system:String>
+    <system:String x:Key="Shape_Can">Lata</system:String>
+    <system:String x:Key="Shape_Cone">Cono</system:String>
+    <system:String x:Key="Shape_Cylinder">Cilindro</system:String>
+    <system:String x:Key="Shape_Pyramid">Pirámide</system:String>
+    <system:String x:Key="Shape_Cube">Cubo</system:String>
+    <system:String x:Key="Shape_Line">Línea</system:String>
+    <system:String x:Key="Shape_Curve">Curva</system:String>
+    <system:String x:Key="Shape_Connector">Conector</system:String>
+    <system:String x:Key="Shape_FlowChart">Diagrama de flujo</system:String>
+    
+    <!-- Keyboard Shortcuts -->
+    <system:String x:Key="Shortcut_New">Ctrl+N</system:String>
+    <system:String x:Key="Shortcut_Open">Ctrl+A</system:String>
+    <system:String x:Key="Shortcut_Save">Ctrl+G</system:String>
+    <system:String x:Key="Shortcut_Print">Ctrl+P</system:String>
+    <system:String x:Key="Shortcut_Undo">Ctrl+Z</system:String>
+    <system:String x:Key="Shortcut_Redo">Ctrl+Y</system:String>
+    <system:String x:Key="Shortcut_Cut">Ctrl+X</system:String>
+    <system:String x:Key="Shortcut_Copy">Ctrl+C</system:String>
+    <system:String x:Key="Shortcut_Paste">Ctrl+V</system:String>
+    <system:String x:Key="Shortcut_SelectAll">Ctrl+E</system:String>
+    <system:String x:Key="Shortcut_Find">Ctrl+B</system:String>
+    <system:String x:Key="Shortcut_Replace">Ctrl+H</system:String>
+    <system:String x:Key="Shortcut_GoTo">Ctrl+I</system:String>
+    <system:String x:Key="Shortcut_Bold">Ctrl+N</system:String>
+    <system:String x:Key="Shortcut_Italic">Ctrl+K</system:String>
+    <system:String x:Key="Shortcut_Underline">Ctrl+S</system:String>
+    <system:String x:Key="Shortcut_SaveAs">F12</system:String>
+    <system:String x:Key="Shortcut_PrintPreview">Ctrl+F2</system:String>
+    <system:String x:Key="Shortcut_SpellCheck">F7</system:String>
+    <system:String x:Key="Shortcut_Help">F1</system:String>
+    <system:String x:Key="Shortcut_Close">Ctrl+W</system:String>
+    <system:String x:Key="Shortcut_Exit">Alt+F4</system:String>
+    <system:String x:Key="Shortcut_FullScreen">F11</system:String>
+    <system:String x:Key="Shortcut_ZoomIn">Ctrl++</system:String>
+    <system:String x:Key="Shortcut_ZoomOut">Ctrl+-</system:String>
+    <system:String x:Key="Shortcut_ResetZoom">Ctrl+0</system:String>
+    
+    <!-- Units -->
+    <system:String x:Key="Unit_Inches">Pulgadas</system:String>
+    <system:String x:Key="Unit_Centimeters">Centímetros</system:String>
+    <system:String x:Key="Unit_Millimeters">Milímetros</system:String>
+    <system:String x:Key="Unit_Points">Puntos</system:String>
+    <system:String x:Key="Unit_Picas">Picas</system:String>
+    <system:String x:Key="Unit_Pixels">Píxeles</system:String>
+    <system:String x:Key="Unit_Emus">EMU</system:String>
+    
+    <!-- Colors -->
+    <system:String x:Key="Color_Automatic">Automático</system:String>
+    <system:String x:Key="Color_MoreColors">Más colores</system:String>
+    <system:String x:Key="Color_Custom">Personalizado</system:String>
+    <system:String x:Key="Color_ThemeColors">Colores del tema</system:String>
+    <system:String x:Key="Color_StandardColors">Colores estándar</system:String>
+    <system:String x:Key="Color_RecentColors">Colores recientes</system:String>
+    <system:String x:Key="Color_NoFill">Sin relleno</system:String>
+    <system:String x:Key="Color_SolidFill">Relleno sólido</system:String>
+    <system:String x:Key="Color_GradientFill">Relleno degradado</system:String>
+    <system:String x:Key="Color_PatternFill">Relleno de patrón</system:String>
+    <system:String x:Key="Color_PictureFill">Relleno de imagen</system:String>
+    <system:String x:Key="Color_TextureFill">Relleno de textura</system:String>
+    
+    <!-- More Strings for Additional Lines -->
+    <system:String x:Key="AutoFit_Content">Ajustar al contenido</system:String>
+    <system:String x:Key="AutoFit_Window">Ajustar a la ventana</system:String>
+    <system:String x:Key="AutoFit_FixedColumnWidth">Ancho de columna fijo</system:String>
+    <system:String x:Key="FitToPage">Ajustar a página</system:String>
+    <system:String x:Key="FitToWidth">Ajustar al ancho</system:String>
+    <system:String x:Key="FitToPages">Ajustar a páginas</system:String>
+    <system:String x:Key="Pages">Páginas</system:String>
+    <system:String x:Key="Copies">Copias</system:String>
+    <system:String x:Key="Collate">Intercalar</system:String>
+    <system:String x:Key="AllPages">Todas las páginas</system:String>
+    <system:String x:Key="CurrentPage">Página actual</system:String>
+    <system:String x:Key="Selection">Selección</system:String>
+    <system:String x:Key="CustomRange">Rango personalizado</system:String>
+    <system:String x:Key="OneSided">Una cara</system:String>
+    <system:String x:Key="TwoSided">Dos caras</system:String>
+    <system:String x:Key="LongEdge">Borde largo</system:String>
+    <system:String x:Key="ShortEdge">Borde corto</system:String>
+    <system:String x:Key="Portrait">Vertical</system:String>
+    <system:String x:Key="Landscape">Horizontal</system:String>
+    <system:String x:Key="PageOrder">Orden de página</system:String>
+    <system:String x:Key="DownThenOver">Abajo, luego a través</system:String>
+    <system:String x:Key="OverThenDown">A través, luego abajo</system:String>
+    <system:String x:Key="PrintQuality">Calidad de impresión</system:String>
+    <system:String x:Key="DraftMode">Modo boceto</system:String>
+    <system:String x:Key="Grayscale">Escala de grises</system:String>
+    <system:String x:Key="BlackAndWhite">Blanco y negro</system:String>
+    <system:String x:Key="ColorMode">Modo de color</system:String>
+    <system:String x:Key="TrueColor">Color real</system:String>
+    <system:String x:Key="OptionsTab_General">General</system:String>
+    <system:String x:Key="OptionsTab_Edit">Editar</system:String>
+    <system:String x:Key="OptionsTab_View">Ver</system:String>
+    <system:String x:Key="OptionsTab_Save">Guardar</system:String>
+    <system:String x:Key="OptionsTab_Print">Imprimir</system:String>
+    <system:String x:Key="OptionsTab_Spelling">Ortografía</system:String>
+    <system:String x:Key="OptionsTab_Grammar">Gramática</system:String>
+    <system:String x:Key="OptionsTab_Advanced">Avanzado</system:String>
+    <system:String x:Key="OptionsTab_Customize">Personalizar</system:String>
+    <system:String x:Key="OptionsTab_TrustCenter">Centro de confianza</system:String>
+    <system:String x:Key="OptionsTab_AddIns">Complementos</system:String>
+    <system:String x:Key="OptionsTab_Resources">Recursos</system:String>
+    <system:String x:Key="CheckBox_DisplaySmartTags">Mostrar etiquetas inteligentes</system:String>
+    <system:String x:Key="CheckBox_ShowDeveloperTab">Mostrar pestaña Programador</system:String>
+    <system:String x:Key="CheckBox_EnableLivePreview">Habilitar vista previa dinámica</system:String>
+    <system:String x:Key="CheckBox_AutoSave">Guardar automáticamente</system:String>
+    <system:String x:Key="CheckBox_AutoRecover">Recuperación automática</system:String>
+    <system:String x:Key="CheckBox_TrackChanges">Control de cambios</system:String>
+    <system:String x:Key="CheckBox_AutoFormat">Autoformato</system:String>
+    <system:String x:Key="CheckBox_SpellCheck">Corrección ortográfica</system:String>
+    <system:String x:Key="CheckBox_GrammarCheck">Corrección gramatical</system:String>
+    <system:String x:Key="CheckBox_AutoCorrect">Corrección automática</system:String>
+    <system:String x:Key="CheckBox_HighlightErrors">Resaltar errores</system:String>
+    <system:String x:Key="CheckBox_ShowZeros">Mostrar ceros</system:String>
+    <system:String x:Key="CheckBox_ShowFormulas">Mostrar fórmulas</system:String>
+    <system:String x:Key="CheckBox_ShowGridlines">Mostrar líneas de cuadrícula</system:String>
+    <system:String x:Key="CheckBox_ShowHeaders">Mostrar encabezados</system:String>
+    <system:String x:Key="CheckBox_FreezePanes">Inmovilizar paneles</system:String>
+    <system:String x:Key="CheckBox_GroupItems">Agrupar elementos</system:String>
+    <system:String x:Key="CheckBox_Subtotals">Subtotales</system:String>
+    <system:String x:Key="CheckBox_OutlineMode">Modo esquema</system:String>
+    <system:String x:Key="CheckBox_FormulasInCells">Fórmulas en celdas</system:String>
+    <system:String x:Key="CheckBox_DirectEdit">Edición directa</system:String>
+    <system:String x:Key="CheckBox_AutoScale">Escala automática</system:String>
+    <system:String x:Key="SpinBox_DecimalPlaces">Decimales</system:String>
+    <system:String x:Key="SpinBox_RecentFiles">Archivos recientes</system:String>
+    <system:String x:Key="SpinBox_AutoSaveInterval">Intervalo de autoguardado</system:String>
+    <system:String x:Key="SpinBox_ZoomLevel">Nivel de zoom</system:String>
+    <system:String x:Key="ComboBox_Units">Unidades</system:String>
+    <system:String x:Key="ComboBox_UserName">Nombre de usuario</system:String>
+    <system:String x:Key="ComboBox_DefaultFileLocation">Ubicación de archivo predeterminada</system:String>
+    <system:String x:Key="ComboBox_DefaultTemplate">Plantilla predeterminada</system:String>
+    <system:String x:Key="ComboBox_CorrectionLanguage">Idioma de corrección</system:String>
+    <system:String x:Key="ComboBox_Theme">Tema</system:String>
+    <system:String x:Key="ComboBox_ColorScheme">Combinación de colores</system:String>
+    <system:String x:Key="ListBox_RecentDocuments">Documentos recientes</system:String>
+    <system:String x:Key="ListBox_CustomDictionaries">Diccionarios personalizados</system:String>
+    <system:String x:Key="ListBox_RecentPlaces">Lugares recientes</system:String>
+    <system:String x:Key="Label_General">General</system:String>
+    <system:String x:Key="Label_Customize">Personalizar</system:String>
+    <system:String x:Key="Label_Save">Guardar</system:String>
+    <system:String x:Key="Label_Display">Mostrar</system:String>
+    <system:String x:Key="Label_Editing">Edición</system:String>
+    <system:String x:Key="Label_Proofing">Revisión</system:String>
+    <system:String x:Key="Label_Advanced">Avanzado</system:String>
+    <system:String x:Key="Label_CurrentUser">Usuario actual</system:String>
+    <system:String x:Key="Label_DefaultSaveFormat">Formato de guardado predeterminado</system:String>
+    <system:String x:Key="Label_DefaultFilePath">Ruta de archivo predeterminada</system:String>
+    <system:String x:Key="Label_StartupOptions">Opciones de inicio</system:String>
+    <system:String x:Key="Label_ScreenTipStyle">Estilo de información en pantalla</system:String>
+    <system:String x:Key="Label_FilterKeys">Teclas de filtro</system:String>
+    <system:String x:Key="Label_Animation">Animación</system:String>
+    <system:String x:Key="Label_ChartOptions">Opciones de gráfico</system:String>
+    <system:String x:Key="Label_EditingOptions">Opciones de edición</system:String>
+    <system:String x:Key="Label_PrintOptions">Opciones de impresión</system:String>
+    <system:String x:Key="Label_SaveOptions">Opciones de guardado</system:String>
+    <system:String x:Key="Label_ViewOptions">Opciones de visualización</system:String>
+    <system:String x:Key="Label_ChartDefaultFormat">Formato de gráfico predeterminado</system:String>
+    <system:String x:Key="Label_DefaultChartType">Tipo de gráfico predeterminado</system:String>
+    <system:String x:Key="Label_DefaultView">Vista predeterminada</system:String>
+    <system:String x:Key="Label_WebOptions">Opciones web</system:String>
+    <system:String x:Key="Label_CompatibilityOptions">Opciones de compatibilidad</system:String>
+    <system:String x:Key="Label_FileLocations">Ubicaciones de archivos</system:String>
+    <system:String x:Key="Label_AutoRecover">Recuperación automática</system:String>
+    <system:String x:Key="Label_ErrorChecking">Comprobación de errores</system:String>
+    <system:String x:Key="Label_SmartDocument">Documento inteligente</system:String>
+    <system:String x:Key="Label_XMLSettings">Configuración XML</system:String>
+    <system:String x:Key="Label_SchemaCache">Caché de esquema</system:String>
+    <system:String x:Key="Label_GlobalDocument">Documento global</system:String>
+    <system:String x:Key="Label_SharedWorkspace">Área de trabajo compartida</system:String>
+    <system:String x:Key="Label_SensitivityLabel">Etiqueta de confidencialidad</system:String>
+    <system:String x:Key="Label_DiscoverySettings">Configuración de detección</system:String>
+    <system:String x:Key="Label_InformationRightsManagement">Administración de derechos</system:String>
+    <system:String x:Key="Label_TemplateSettings">Configuración de plantilla</system:String>
+    <system:String x:Key="Label_MailMergeSettings">Configuración de combinación</system:String>
+    <system:String x:Key="Label_FieldCodes">Códigos de campo</system:String>
+    <system:String x:Key="Label_MailFormat">Formato de correo</system:String>
+    <system:String x:Key="Label_EnvelopeOptions">Opciones de sobre</system:String>
+    <system:String x:Key="Label_LabelOptions">Opciones de etiqueta</system:String>
+    <system:String x:Key="Label_Address">Dirección</system:String>
+    <system:String x:Key="Label_StartupFolder">Carpeta de inicio</system:String>
+    <system:String x:Key="Label_QueryOptions">Opciones de consulta</system:String>
+    <system:String x:Key="Label_ConnectionTimeout">Tiempo de espera de conexión</system:String>
+    <system:String x:Key="Label_RefreshInterval">Intervalo de actualización</system:String>
+    <system:String x:Key="Label_ExternalData">Datos externos</system:String>
+    <system:String x:Key="Label_OLAPSettings">Configuración OLAP</system:String>
+    <system:String x:Key="Label_PivotTableSettings">Configuración de tabla dinámica</system:String>
+    <system:String x:Key="Label_QueryWizard">Asistente para consultas</system:String>
+    <system:String x:Key="Label_DataRange">Rango de datos</system:String>
+    <system:String x:Key="Label_Destination">Destino</system:String>
+    <system:String x:Key="Label_Source">Origen</system:String>
+    <system:String x:Key="Label_SortOrder">Orden de clasificación</system:String>
+    <system:String x:Key="Label_SummaryFunction">Función de resumen</system:String>
+    <system:String x:Key="Label_GroupInterval">Intervalo de grupo</system:String>
+    <system:String x:Key="Label_ColumnWidth">Ancho de columna</system:String>
+    <system:String x:Key="Label_RowHeight">Alto de fila</system:String>
+    <system:String x:Key="Label_Indent">Sangría</system:String>
+    <system:String x:Key="Label_Spacing">Espaciado</system:String>
+    <system:String x:Key="Label_LineSpacing">Interlineado</system:String>
+    <system:String x:Key="Label_Before">Antes</system:String>
+    <system:String x:Key="Label_After">Después</system:String>
+    <system:String x:Key="Label_Left">Izquierda</system:String>
+    <system:String x:Key="Label_Right">Derecha</system:String>
+    <system:String x:Key="Label_FirstLine">Primera línea</system:String>
+    <system:String x:Key="Label_Hanging">Francesa</system:String>
+    <system:String x:Key="Label_Alignment">Alineación</system:String>
+    <system:String x:Key="Label_Direction">Dirección</system:String>
+    <system:String x:Key="Label_Orientation">Orientación</system:String>
+    <system:String x:Key="Label_Position">Posición</system:String>
+    <system:String x:Key="Label_Size">Tamaño</system:String>
+    <system:String x:Key="Label_Width">Ancho</system:String>
+    <system:String x:Key="Label_Height">Alto</system:String>
+    <system:String x:Key="Label_Rotation">Rotación</system:String>
+    <system:String x:Key="Label_Scale">Escala</system:String>
+    <system:String x:Key="Label_Offset">Desplazamiento</system:String>
+    <system:String x:Key="Label_Margin">Margen</system:String>
+    <system:String x:Key="Label_Padding">Relleno</system:String>
+    <system:String x:Key="Label_Border">Borde</system:String>
+    <system:String x:Key="Label_Shadow">Sombra</system:String>
+    <system:String x:Key="Label_Reflection">Reflejo</system:String>
+    <system:String x:Key="Label_Glow">Brillo</system:String>
+    <system:String x:Key="Label_SoftEdge">Borde suave</system:String>
+    <system:String x:Key="Label_Bevel">Bisel</system:String>
+    <system:String x:Key="Label_Contour">Contorno</system:String>
+    <system:String x:Key="Label_3DRotation">Rotación 3D</system:String>
+    <system:String x:Key="Label_3DFormat">Formato 3D</system:String>
+    <system:String x:Key="Label_Lighting">Iluminación</system:String>
+    <system:String x:Key="Label_Surface">Superficie</system:String>
+    <system:String x:Key="Label_Material">Material</system:String>
+    <system:String x:Key="Label_Texture">Textura</system:String>
+    <system:String x:Key="Label_Picture">Imagen</system:String>
+    <system:String x:Key="Label_Gradient">Degradado</system:String>
+    <system:String x:Key="Label_Solid">Sólido</system:String>
+    <system:String x:Key="Label_Pattern">Patrón</system:String>
+    <system:String x:Key="Label_Transparency">Transparencia</system:String>
+    <system:String x:Key="Label_Opacity">Opacidad</system:String>
+    <system:String x:Key="Label_Color">Color</system:String>
+    <system:String x:Key="Label_Weight">Grosor</system:String>
+    <system:String x:Key="Label_Style">Estilo</system:String>
+    <system:String x:Key="Label_Type">Tipo</system:String>
+    <system:String x:Key="Label_Dash">Guión</system:String>
+    <system:String x:Key="Label_Compound">Compuesto</system:String>
+    <system:String x:Key="Label_Cap">Tapa</system:String>
+    <system:String x:Key="Label_Join">Unión</system:String>
+    <system:String x:Key="Label_Arrow">Flecha</system:String>
+    <system:String x:Key="Label_Begin">Inicio</system:String>
+    <system:String x:Key="Label_End">Fin</system:String>
+    <system:String x:Key="Label_HeadStyle">Estilo de punta</system:String>
+    <system:String x:Key="Label_HeadSize">Tamaño de punta</system:String>
+    <system:String x:Key="Label_TailStyle">Estilo de cola</system:String>
+    <system:String x:Key="Label_TailSize">Tamaño de cola</system:String>
+    <system:String x:Key="Label_PresetGeometry">Geometría preestablecida</system:String>
+    <system:String x:Key="Label_AdjustValues">Ajustar valores</system:String>
+    <system:String x:Key="Label_ShapeOptions">Opciones de forma</system:String>
+    <system:String x:Key="Label_TextBox">Cuadro de texto</system:String>
+    <system:String x:Key="Label_InternalMargin">Margen interno</system:String>
+    <system:String x:Key="Label_Vertical">Vertical</system:String>
+    <system:String x:Key="Label_Horizontal">Horizontal</system:String>
+    <system:String x:Key="Label_WrapText">Ajuste de texto</system:String>
+    <system:String x:Key="Label_ResizeShape">Cambiar tamaño de forma</system:String>
+    <system:String x:Key="Label_FitText">Ajustar texto</system:String>
+    <system:String x:Key="Label_Anchor">Anclar</system:String>
+    <system:String x:Key="Label_Lock">Bloquear</system:String>
+    <system:String x:Key="Label_LockAspect">Proporción</system:String>
+    <system:String x:Key="Label_LockPosition">Posición</system:String>
+    <system:String x:Key="Label_LockText">Texto</system:String>
+    <system:String x:Key="Label_Protection">Protección</system:String>
+    <system:String x:Key="Label_EditableRange">Rango editable</system:String>
+    <system:String x:Key="Label_Exceptions">Excepciones</system:String>
+    <system:String x:Key="Label_Password">Contraseña</system:String>
+    <system:String x:Key="Label_Permission">Permiso</system:String>
+    <system:String x:Key="Label_Restrictions">Restricciones</system:String>
+    <system:String x:Key="Label_AllowComments">Permitir comentarios</system:String>
+    <system:String x:Key="Label_AllowFormatting">Permitir formato</system:String>
+    <system:String x:Key="Label_AllowEditing">Permitir edición</system:String>
+    <system:String x:Key="Label_ReadOnly">Solo lectura</system:String>
+    <system:String x:Key="Label_Hidden">Oculto</system:String>
+    <system:String x:Key="Label_Visible">Visible</system:String>
+    <system:String x:Key="Label_PrintObject">Imprimir objeto</system:String>
+    <system:String x:Key="Label_SelectObject">Seleccionar objeto</system:String>
+    <system:String x:Key="Label_EditObject">Editar objeto</system:String>
+    
+</ResourceDictionary>
