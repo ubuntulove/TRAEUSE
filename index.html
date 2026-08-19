@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voxel Engine</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #87CEEB; font-family: 'Segoe UI', sans-serif; }
+  #view { display: block; width: 100%; height: 100%; image-rendering: pixelated; image-rendering: crisp-edges; cursor: none; }
+
+  #crosshair {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 22px; height: 22px; pointer-events: none; z-index: 10;
+  }
+  #crosshair::before, #crosshair::after {
+    content: ''; position: absolute; background: rgba(255,255,255,0.9);
+    box-shadow: 0 0 2px rgba(0,0,0,0.9);
+  }
+  #crosshair::before { left: 50%; top: 0; width: 2px; height: 100%; transform: translateX(-50%); }
+  #crosshair::after  { top: 50%; left: 0; height: 2px; width: 100%; transform: translateY(-50%); }
+
+  #hotbar {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; padding: 6px; background: rgba(0,0,0,0.35);
+    border-radius: 8px; z-index: 10; border: 2px solid rgba(255,255,255,0.15);
+  }
+  .slot {
+    width: 50px; height: 50px; border-radius: 6px; border: 2px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    position: relative; background: rgba(0,0,0,0.25);
+  }
+  .slot canvas { width: 38px; height: 38px; image-rendering: pixelated; border-radius: 3px; }
+  .slot.active { border-color: #fff; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  .slot .num { position: absolute; top: 1px; left: 4px; font-size: 10px; color: #fff; text-shadow: 1px 1px 1px #000; }
+  .slot .name {
+    position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; color: #fff; text-shadow: 1px 1px 1px #000; white-space: nowrap;
+    opacity: 0; transition: opacity .15s;
+  }
+  .slot.active .name { opacity: 1; }
+
+  #info {
+    position: fixed; top: 10px; left: 10px; color: #fff; font-size: 12px;
+    text-shadow: 1px 1px 2px #000; z-index: 10; line-height: 1.5; pointer-events: none;
+  }
+  #info b { color: #ffe082; }
+
+  #overlay {
+    position: fixed; inset: 0; background: linear-gradient(135deg, #1a2a3a, #2c5364);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 100; color: #fff; text-align: center;
+  }
+  #overlay h1 { font-size: 48px; margin-bottom: 8px; letter-spacing: 2px; text-shadow: 2px 2px 4px #000; }
+  #overlay p { opacity: 0.8; margin-bottom: 24px; max-width: 520px; line-height: 1.6; }
+  #overlay .keys { font-size: 13px; opacity: 0.85; margin-bottom: 24px; line-height: 1.8; background: rgba(0,0,0,0.25); padding: 14px 22px; border-radius: 10px; }
+  #overlay .keys b { color: #ffe082; }
+  #playBtn {
+    padding: 14px 42px; font-size: 18px; font-weight: bold; color: #1a2a3a;
+    background: #ffe082; border: none; border-radius: 8px; cursor: pointer;
+    box-shadow: 0 4px 0 #b8860b; transition: transform .1s, box-shadow .1s;
+  }
+  #playBtn:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #b8860b; }
+  #playBtn:active { transform: translateY(2px); box-shadow: 0 2px 0 #b8860b; }
+  #playBtn:disabled { opacity: 0.6; cursor: default; }
+  .progress { width: 320px; height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; overflow: hidden; margin: 16px 0; }
+  .progress > div { height: 100%; width: 0%; background: #ffe082; transition: width .2s; }
+</style>
+</head>
+<body>
+<canvas id="view"></canvas>
+<canvas id="buf" style="display:none"></canvas>
+<div id="crosshair"></div>
+<div id="hotbar"></div>
+<div id="info">
+  <div><b>VOXEL ENGINE</b> · software raymarcher</div>
+  <div>FPS: <span id="fps">0</span> · Res: <span id="res">0</span></div>
+  <div>Pos: <span id="pos">0,0,0</span></div>
+  <div>Chunks: <span id="chunks">0</span></div>
+</div>
+
+<div id="overlay">
+  <h1>VOXEL ENGINE</h1>
+  <p>A chunk-based voxel world with procedural terrain, a custom software raymarching renderer (no WebGL), per-face shading, distance fog, AABB physics, and block interaction.</p>
+  <div class="keys">
+    <b>WASD</b> Move &nbsp; <b>Space</b> Jump &nbsp; <b>Shift</b> Sprint &nbsp; <b>F</b> Fly<br>
+    <b>Mouse</b> Look &nbsp; <b>Left Click</b> Break &nbsp; <b>Right Click</b> Place<br>
+    <b>1–7</b> / Scroll Select Block &nbsp; <b>Esc</b> Release Mouse
+  </div>
+  <div class="progress"><div id="prog"></div></div>
+  <button id="playBtn" disabled>Generating World...</button>
+</div>
+
+<script>
+/* ============================================================
+   VOXEL ENGINE  —  pure software renderer (Canvas 2D raymarcher)
+   - Chunk world 16 x 64 x 16
+   - 2D Perlin fbm terrain + mountains + trees + water
+   - DDA voxel raymarching per pixel
+   - Per-face directional shading + texture sampling + fog
+   - AABB physics + collision
+   - DDA voxel picking for break / place
+   ============================================================ */
+
+// ---------- Config ----------
+const CHUNK_X = 16, CHUNK_Y = 64, CHUNK_Z = 16;
+const WORLD_CX = 5, WORLD_CZ = 5;       // 5x5 chunks
+const SEA_LEVEL = 22;
+
+const AIR=0, GRASS=1, DIRT=2, STONE=3, SAND=4, WOOD=5, LEAVES=6, WATER=7, BEDROCK=8, SNOW=9, PLANK=10;
+const PALETTE = [GRASS, DIRT, STONE, SAND, WOOD, LEAVES, PLANK];
+const isSolid = b => b !== AIR && b !== WATER;
+const isOpaque = b => b !== AIR && b !== WATER;
+
+// ---------- Texture atlas (procedural) ----------
+const TEX = 16, TILES = 8, ATLAS = TEX * TILES;
+const atlasCanvas = document.createElement('canvas');
+atlasCanvas.width = atlasCanvas.height = ATLAS;
+const actx = atlasCanvas.getContext('2d');
+
+function fillTile(idx, base, variance) {
+  const tx = (idx % TILES) * TEX, ty = Math.floor(idx / TILES) * TEX;
+  for (let y = 0; y < TEX; y++) for (let x = 0; x < TEX; x++) {
+    const n = (Math.random() - 0.5) * variance;
+    actx.fillStyle = `rgb(${(base[0]+n)|0},${(base[1]+n)|0},${(base[2]+n)|0})`;
+    actx.fillRect(tx + x, ty + y, 1, 1);
+  }
+}
+
+const T = { grassTop:0, grassSide:1, dirt:2, stone:3, sand:4, woodTop:5, woodSide:6, leaves:7, water:8, bedrock:9, snow:10, plank:11 };
+fillTile(T.grassTop, [86,168,72], 30);
+fillTile(T.dirt, [134,96,67], 28);
+fillTile(T.grassSide, [134,96,67], 24); {
+  const tx=(T.grassSide%TILES)*TEX, ty=Math.floor(T.grassSide/TILES)*TEX;
+  for (let y=0;y<4;y++) for(let x=0;x<TEX;x++){const n=(Math.random()-0.5)*30;actx.fillStyle=`rgb(${(86+n)|0},${(168+n)|0},${(72+n)|0})`;actx.fillRect(tx+x,ty+y,1,1);}
+}
+fillTile(T.stone, [130,130,135], 22);
+fillTile(T.sand, [219,203,142], 18);
+fillTile(T.woodTop, [165,124,74], 14);
+fillTile(T.woodSide, [120,85,50], 18); {
+  const tx=(T.woodSide%TILES)*TEX, ty=Math.floor(T.woodSide/TILES)*TEX;
+  for (let x=0;x<TEX;x+=4){actx.fillStyle='rgba(60,40,25,0.4)';actx.fillRect(tx+x,ty,1,TEX);}
+}
+fillTile(T.leaves, [54,122,46], 40);
+fillTile(T.water, [54,110,200], 16);
+fillTile(T.bedrock, [60,60,64], 18);
+fillTile(T.snow, [240,245,250], 10);
+fillTile(T.plank, [180,140,85], 16); {
+  const tx=(T.plank%TILES)*TEX, ty=Math.floor(T.plank/TILES)*TEX;
+  actx.fillStyle='rgba(80,55,30,0.5)';actx.fillRect(tx,ty+7,TEX,1);actx.fillRect(tx,ty+15,TEX,1);
+}
+
+// atlas ImageData for fast pixel sampling
+const atlasImg = actx.getImageData(0, 0, ATLAS, ATLAS).data;
+
+// tile index lookup per block + face (0:+X,1:-X,2:+Y,3:-Y,4:+Z,5:-Z)
+const TILE_MAP = {};
+const setFaces = (id, faces, t) => { TILE_MAP[id] = TILE_MAP[id] || []; for (const f of faces) TILE_MAP[id][f] = t; };
+setFaces(GRASS, [0,1,4,5], T.grassSide); setFaces(GRASS, [2], T.grassTop); setFaces(GRASS, [3], T.dirt);
+setFaces(DIRT, [0,1,2,3,4,5], T.dirt);
+setFaces(STONE, [0,1,2,3,4,5], T.stone);
+setFaces(SAND, [0,1,2,3,4,5], T.sand);
+setFaces(WOOD, [0,1,4,5], T.woodSide); setFaces(WOOD, [2,3], T.woodTop);
+setFaces(LEAVES, [0,1,2,3,4,5], T.leaves);
+setFaces(WATER, [0,1,2,3,4,5], T.water);
+setFaces(BEDROCK, [0,1,2,3,4,5], T.bedrock);
+setFaces(SNOW, [0,1,4,5], T.snow); setFaces(SNOW, [2], T.snow); setFaces(SNOW, [3], T.dirt);
+setFaces(PLANK, [0,1,2,3,4,5], T.plank);
+
+// tile origin pixel in atlas
+const tileOrigin = [];
+for (let i = 0; i < TILES * TILES; i++) tileOrigin.push({ ox: (i % TILES) * TEX, oy: Math.floor(i / TILES) * TEX });
+
+// ---------- Perlin noise ----------
+function makePerlin(seed) {
+  const p = new Uint8Array(512), perm = new Uint8Array(256);
+  for (let i = 0; i < 256; i++) perm[i] = i;
+  let s = seed | 0 || 1;
+  const rand = () => { s = (s * 16807) % 2147483647; return s / 2147483647; };
+  for (let i = 255; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); const t = perm[i]; perm[i] = perm[j]; perm[j] = t; }
+  for (let i = 0; i < 512; i++) p[i] = perm[i & 255];
+  const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
+  const lerp = (a, b, t) => a + t * (b - a);
+  const grad = (h, x, y) => ((h & 1) ? x : -x) + ((h & 2) ? y : -y);
+  return function noise2D(x, y) {
+    const X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
+    x -= Math.floor(x); y -= Math.floor(y);
+    const u = fade(x), v = fade(y);
+    const aa = p[p[X] + Y], ab = p[p[X] + Y + 1], ba = p[p[X + 1] + Y], bb = p[p[X + 1] + Y + 1];
+    return lerp(lerp(grad(aa, x, y), grad(ba, x - 1, y), u), lerp(grad(ab, x, y - 1), grad(bb, x - 1, y - 1), u), v);
+  };
+}
+const noise2D = makePerlin(1337);
+function fbm(x, z) {
+  let v = 0, amp = 1, freq = 1, norm = 0;
+  for (let o = 0; o < 4; o++) { v += noise2D(x * freq, z * freq) * amp; norm += amp; amp *= 0.5; freq *= 2; }
+  return (v / norm + 1) / 2;
+}
+
+// ---------- World ----------
+const world = new Map();
+const chunkKey = (cx, cz) => cx + ',' + cz;
+
+class Chunk {
+  constructor(cx, cz) { this.cx = cx; this.cz = cz; this.blocks = new Uint8Array(CHUNK_X * CHUNK_Y * CHUNK_Z); }
+  idx(x, y, z) { return (y * CHUNK_Z + z) * CHUNK_X + x; }
+  get(x, y, z) { if (y < 0 || y >= CHUNK_Y) return AIR; if (x < 0 || x >= CHUNK_X || z < 0 || z >= CHUNK_Z) return AIR; return this.blocks[this.idx(x, y, z)]; }
+  set(x, y, z, v) { this.blocks[this.idx(x, y, z)] = v; }
+}
+function worldGet(wx, wy, wz) {
+  if (wy < 0 || wy >= CHUNK_Y) return AIR;
+  const cx = Math.floor(wx / CHUNK_X), cz = Math.floor(wz / CHUNK_Z);
+  const ch = world.get(chunkKey(cx, cz));
+  if (!ch) return AIR;
+  return ch.get(wx - cx * CHUNK_X, wy, wz - cz * CHUNK_Z);
+}
+function worldSet(wx, wy, wz, v) {
+  if (wy < 0 || wy >= CHUNK_Y) return false;
+  const cx = Math.floor(wx / CHUNK_X), cz = Math.floor(wz / CHUNK_Z);
+  const ch = world.get(chunkKey(cx, cz));
+  if (!ch) return false;
+  ch.set(wx - cx * CHUNK_X, wy, wz - cz * CHUNK_Z, v);
+  return true;
+}
+
+// ---------- Terrain generation ----------
+function generateChunk(cx, cz) {
+  const ch = new Chunk(cx, cz);
+  const baseX = cx * CHUNK_X, baseZ = cz * CHUNK_Z;
+  for (let lx = 0; lx < CHUNK_X; lx++) {
+    for (let lz = 0; lz < CHUNK_Z; lz++) {
+      const wx = baseX + lx, wz = baseZ + lz;
+      const h = Math.floor(fbm(wx * 0.025, wz * 0.025) * 28) + 14;
+      const m = fbm(wx * 0.012 + 100, wz * 0.012 + 100);
+      const height = Math.min(CHUNK_Y - 2, h + (m > 0.62 ? ((m - 0.62) * 60) | 0 : 0));
+      for (let y = 0; y <= height; y++) {
+        let b = STONE;
+        if (y === 0) b = BEDROCK;
+        else if (y === height) b = height < SEA_LEVEL + 1 ? SAND : height > 36 ? SNOW : GRASS;
+        else if (y > height - 4) b = height < SEA_LEVEL ? SAND : DIRT;
+        ch.set(lx, y, lz, b);
+      }
+      for (let y = height + 1; y <= SEA_LEVEL; y++) ch.set(lx, y, lz, WATER);
+      const r = ((Math.sin(wx * 12.9898 + wz * 78.233) * 43758.5453) % 1 + 1) % 1;
+      if (height > SEA_LEVEL && height < 34 && r < 0.018) placeTree(ch, lx, height + 1, lz);
+    }
+  }
+  return ch;
+}
+function placeTree(ch, x, y, z) {
+  const h = 4 + (Math.floor(Math.abs(Math.sin(x * 3 + z * 7)) * 3));
+  for (let i = 0; i < h; i++) if (y + i < CHUNK_Y) ch.set(x, y + i, z, WOOD);
+  const top = y + h;
+  for (let dy = -1; dy <= 1; dy++) for (let dx = -2; dx <= 2; dx++) for (let dz = -2; dz <= 2; dz++) {
+    if (dx === 0 && dz === 0 && dy < 1) continue;
+    if (dx * dx + dz * dz > 5) continue;
+    const lx = x + dx, ly = top + dy, lz = z + dz;
+    if (lx < 0 || lx >= CHUNK_X || lz < 0 || lz >= CHUNK_Z || ly >= CHUNK_Y) continue;
+    if (ch.get(lx, ly, lz) === AIR) ch.set(lx, ly, lz, LEAVES);
+  }
+  if (top + 1 < CHUNK_Y) ch.set(x, top + 1, z, LEAVES);
+}
+
+// ---------- Software raymarching renderer ----------
+const view = document.getElementById('view');
+const vctx = view.getContext('2d');
+const buf = document.getElementById('buf');
+const bctx = buf.getContext('2d');
+
+const FOV = 70 * Math.PI / 180;
+const SUN = (() => { const v = new Float32Array(3); const l = Math.hypot(0.5,1,0.3); v[0]=0.5/l; v[1]=1/l; v[2]=0.3/l; return v; })();
+
+let RW = 320, RH = 180;          // internal render resolution
+let imgData = null, pix = null;   // ImageData + its Uint8ClampedArray
+
+function resizeRender() {
+  let scale = 0.4;
+  RW = Math.max(160, Math.floor(innerWidth * scale));
+  RH = Math.max(90, Math.floor(innerHeight * scale));
+  // keep width even
+  RW -= RW % 2;
+  buf.width = RW; buf.height = RH;
+  imgData = bctx.createImageData(RW, RH);
+  pix = imgData.data;
+  view.width = innerWidth; view.height = innerHeight;
+  document.getElementById('res').textContent = RW + 'x' + RH;
+}
+resizeRender();
+
+const SKY_TOP = [120, 178, 230], SKY_BOT = [200, 224, 240];
+
+// render state reused per frame
+let camX, camY, camZ, fwdX, fwdY, fwdZ, rgtX, rgtZ, upX, upY, upZ;
+let tanFov, aspect;
+
+function setupCamera() {
+  camX = player.pos[0]; camY = player.pos[1]; camZ = player.pos[2];
+  const cp = Math.cos(player.pitch), sp = Math.sin(player.pitch);
+  const sy = Math.sin(player.yaw), cy = Math.cos(player.yaw);
+  fwdX = -sy * cp; fwdY = sp; fwdZ = -cy * cp;
+  // right = forward x up(0,1,0)  -> (-fwdZ, 0, fwdX) normalized
+  let rx = -fwdZ, rz = fwdX; const rl = Math.hypot(rx, rz); rgtX = rx / rl; rgtZ = rz / rl;
+  // up = right x forward
+  upX = rgtZ * fwdY; upY = rgtZ * fwdZ - rgtX * fwdX; upZ = -rgtX * fwdY;
+  // wait recompute properly: up = cross(right, forward)
+  // cross(r, f) = (r.y*f.z - r.z*f.y, r.z*f.x - r.x*f.z, r.x*f.y - r.y*f.x)
+  upX = 0 * fwdZ - rgtZ * fwdY;
+  upY = rgtZ * fwdX - rgtX * fwdZ;
+  upZ = rgtX * fwdY - 0 * fwdX;
+  tanFov = Math.tan(FOV / 2);
+  aspect = RW / RH;
+}
+
+// DDA march a single ray; returns color packed via out array [r,g,b]
+// out: Int32 or Float32 length 3
+const out = new Float32Array(3);
+const SKY_R = SKY_BOT[0], SKY_G = SKY_BOT[1], SKY_B = SKY_BOT[2];
+
+function marchRay(dirX, dirY, dirZ, maxT) {
+  let x = Math.floor(camX), y = Math.floor(camY), z = Math.floor(camZ);
+  const stepX = dirX > 0 ? 1 : -1, stepY = dirY > 0 ? 1 : -1, stepZ = dirZ > 0 ? 1 : -1;
+  const tDeltaX = dirX !== 0 ? Math.abs(1 / dirX) : 1e9;
+  const tDeltaY = dirY !== 0 ? Math.abs(1 / dirY) : 1e9;
+  const tDeltaZ = dirZ !== 0 ? Math.abs(1 / dirZ) : 1e9;
+  let tMaxX = dirX > 0 ? (x + 1 - camX) * tDeltaX : dirX < 0 ? (camX - x) * tDeltaX : 1e9;
+  let tMaxY = dirY > 0 ? (y + 1 - camY) * tDeltaY : dirY < 0 ? (camY - y) * tDeltaY : 1e9;
+  let tMaxZ = dirZ > 0 ? (z + 1 - camZ) * tDeltaZ : dirZ < 0 ? (camZ - z) * tDeltaZ : 1e9;
+
+  let t = 0, face = -1, nx = 0, ny = 0, nz = 0;
+  let inWater = false, waterEnterT = 0;
+
+  for (let i = 0; i < 96; i++) {
+    if (tMaxX < tMaxY && tMaxX < tMaxZ) { x += stepX; t = tMaxX; tMaxX += tDeltaX; face = 0; nx = -stepX; }
+    else if (tMaxY < tMaxZ) { y += stepY; t = tMaxY; tMaxY += tDeltaY; face = 1; ny = -stepY; }
+    else { z += stepZ; t = tMaxZ; tMaxZ += tDeltaZ; face = 2; nz = -stepZ; }
+    if (t > maxT) {
+      if (inWater) { // ray ended inside water -> show water blended to sky
+        waterShade(dirY, t, out); return true;
+      }
+      return false; // sky
+    }
+    if (y < 0 || y >= CHUNK_Y) { if (inWater) { waterShade(dirY, t, out); return true; } return false; }
+    const cxw = Math.floor(x / CHUNK_X), czw = Math.floor(z / CHUNK_Z);
+    const ch = world.get(chunkKey(cxw, czw));
+    if (ch) {
+      const lx = x - cxw * CHUNK_X, lz = z - czw * CHUNK_Z;
+      const b = ch.get(lx, y, lz);
+      if (b === WATER) {
+        if (!inWater) { inWater = true; waterEnterT = t; }
+        continue;
+      } else if (b !== AIR) {
+        // hit a solid block
+        const hx = camX + dirX * t, hy = camY + dirY * t, hz = camZ + dirZ * t;
+        shadeHit(b, face, nx, ny, nz, hx, hy, hz, x, y, z, t, out);
+        if (inWater) {
+          // blend water tint over solid
+          const wd = t - waterEnterT;
+          const wa = Math.min(0.6, 0.18 + wd * 0.12);
+          out[0] = out[0] * (1 - wa) + 40 * wa;
+          out[1] = out[1] * (1 - wa) + 90 * wa;
+          out[2] = out[2] * (1 - wa) + 170 * wa;
+        }
+        return true;
+      } else {
+        // air -> if was in water, we exited water surface upward
+        if (inWater) { waterShade(dirY, t, out); return true; }
+      }
+    } else {
+      // outside generated world -> sky (but still account water)
+      if (inWater) { waterShade(dirY, t, out); return true; }
+      if (y < 0) { out[0]=60; out[1]=70; out[2]=80; return true; } // void floor-ish
+    }
+  }
+  if (inWater) { waterShade(dirY, t, out); return true; }
+  return false;
+}
+
+function waterShade(dirY, t, out) {
+  // looking up through water surface
+  const fog = Math.min(1, t / 90);
+  out[0] = 40 + (SKY_BOT[0] - 40) * fog;
+  out[1] = 90 + (SKY_BOT[1] - 90) * fog;
+  out[2] = 170 + (SKY_BOT[2] - 170) * fog;
+}
+
+function shadeHit(b, face, nx, ny, nz, hx, hy, hz, bx, by, bz, t, out) {
+  // texture uv on the face
+  const tiles = TILE_MAP[b];
+  const fi = face === 0 ? (nx > 0 ? 0 : 1) : face === 1 ? (ny > 0 ? 2 : 3) : (nz > 0 ? 4 : 5);
+  const tile2 = tiles ? tiles[fi] : 0;
+  let u, v;
+  if (face === 0) { u = hz - Math.floor(hz); v = hy - Math.floor(hy); }
+  else if (face === 1) { u = hx - Math.floor(hx); v = hz - Math.floor(hz); }
+  else { u = hx - Math.floor(hx); v = hy - Math.floor(hy); }
+  const origin = tileOrigin[tile2];
+  const tx = (origin.ox + Math.min(TEX - 1, (u * TEX) | 0));
+  const ty = (origin.oy + Math.min(TEX - 1, (v * TEX) | 0));
+  const idx = (ty * ATLAS + tx) * 4;
+  let r = atlasImg[idx], g = atlasImg[idx + 1], bl = atlasImg[idx + 2];
+
+  // per-face directional shade (fake AO + sun)
+  let sh;
+  if (face === 1 && ny > 0) sh = 1.0;            // top
+  else if (face === 1) sh = 0.5;                 // bottom
+  else if (face === 0) sh = 0.8;                 // x sides
+  else sh = 0.65;                                // z sides
+  // sun lighting: dot(normal, sun)
+  let sun = nx * SUN[0] + ny * SUN[1] + nz * SUN[2];
+  sun = 0.55 + 0.45 * Math.max(0, sun);
+  sh *= sun;
+
+  // subtle wave shimmer for water-adjacent sand skipped; leaves a bit darker
+  if (b === LEAVES) sh *= 0.9;
+  if (b === WATER) sh = 0.8 + 0.2 * Math.sin((hx + hz) * 2 + performance.now() * 0.002);
+
+  r = r * sh; g = g * sh; bl = bl * sh;
+
+  // distance fog -> blend to sky
+  const fog = Math.min(1, t / 70);
+  r = r * (1 - fog) + SKY_BOT[0] * fog;
+  g = g * (1 - fog) + SKY_BOT[1] * fog;
+  bl = bl * (1 - fog) + SKY_BOT[2] * fog;
+
+  out[0] = r | 0; out[1] = g | 0; out[2] = bl | 0;
+}
+
+function renderFrame() {
+  setupCamera();
+  const maxT = 80;
+  const data = pix;
+  let p = 0;
+  const invW = 1 / RW, invH = 1 / RH;
+  for (let py = 0; py < RH; py++) {
+    const sy = (1 - (py + 0.5) * 2 * invH) * tanFov; // top positive
+    for (let px = 0; px < RW; px++) {
+      const sx = ((px + 0.5) * 2 * invW - 1) * tanFov * aspect;
+      // dir = forward + right*sx + up*sy
+      let dx = fwdX + rgtX * sx + upX * sy;
+      let dy = fwdY + upY * sy;
+      let dz = fwdZ + rgtZ * sx + upZ * sy;
+      const dl = 1 / Math.hypot(dx, dy, dz); dx *= dl; dy *= dl; dz *= dl;
+      const hit = marchRay(dx, dy, dz, maxT);
+      if (hit) {
+        data[p] = out[0]; data[p+1] = out[1]; data[p+2] = out[2]; data[p+3] = 255;
+      } else {
+        // sky gradient (vertical)
+        const k = Math.max(0, Math.min(1, (sy / tanFov + 1) * 0.5));
+        data[p] = SKY_TOP[0] + (SKY_BOT[0]-SKY_TOP[0])*k;
+        data[p+1] = SKY_TOP[1] + (SKY_BOT[1]-SKY_TOP[1])*k;
+        data[p+2] = SKY_TOP[2] + (SKY_BOT[2]-SKY_TOP[2])*k;
+        data[p+3] = 255;
+      }
+      p += 4;
+    }
+  }
+  bctx.putImageData(imgData, 0, 0);
+  // upscale to view
+  vctx.imageSmoothingEnabled = false;
+  vctx.drawImage(buf, 0, 0, view.width, view.height);
+  // sun disk
+  drawSun();
+}
+
+function drawSun() {
+  // project sun direction to screen
+  const dx = SUN[0], dy = SUN[1], dz = SUN[2];
+  // relative along camera basis
+  const cz = dx*fwdX + dy*fwdY + dz*fwdZ;
+  if (cz <= 0) return;
+  const cx = dx*rgtX + dz*rgtZ;
+  const cy = dx*upX + dy*upY + dz*upZ;
+  const screenX = (cx / cz / tanFov / aspect) * 0.5 * view.width + view.width*0.5;
+  const screenY = (1 - (cy / cz / tanFov + 1) * 0.5) * view.height;
+  vctx.save();
+  vctx.globalAlpha = 0.85;
+  vctx.fillStyle = '#fff6c8';
+  vctx.beginPath(); vctx.arc(screenX, screenY, 18, 0, Math.PI*2); vctx.fill();
+  vctx.globalAlpha = 0.25;
+  vctx.beginPath(); vctx.arc(screenX, screenY, 36, 0, Math.PI*2); vctx.fill();
+  vctx.restore();
+}
+
+// ---------- Player / Physics ----------
+const player = {
+  pos: new Float32Array([WORLD_CX*CHUNK_X/2, 50, WORLD_CZ*CHUNK_Z/2]),
+  vel: new Float32Array(3),
+  yaw: 0, pitch: -0.2, onGround: false,
+  height: 1.7, width: 0.6, flying: false,
+};
+function findSpawn() {
+  const x = Math.floor(player.pos[0]), z = Math.floor(player.pos[2]);
+  for (let y = CHUNK_Y - 1; y > 0; y--) if (isSolid(worldGet(x, y, z))) { player.pos[1] = y + 1 + player.height*0.5 + 0.01; return; }
+}
+
+const keys = {};
+addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (e.code.startsWith('Digit')) { const n = parseInt(e.code.slice(5)); if (n>=1 && n<=PALETTE.length) selectSlot(n-1); }
+  if (e.code === 'KeyF') player.flying = !player.flying;
+});
+addEventListener('keyup', e => { keys[e.code] = false; });
+
+let pointerLocked = false;
+view.addEventListener('click', () => { if (started && !pointerLocked) view.requestPointerLock(); });
+document.addEventListener('pointerlockchange', () => { pointerLocked = document.pointerLockElement === view; });
+document.addEventListener('mousemove', e => {
+  if (!pointerLocked) return;
+  player.yaw -= e.movementX * 0.0025;
+  player.pitch -= e.movementY * 0.0025;
+  player.pitch = Math.max(-Math.PI/2+0.01, Math.min(Math.PI/2-0.01, player.pitch));
+});
+document.addEventListener('mousedown', e => {
+  if (!pointerLocked) return;
+  if (e.button === 0) breakBlock();
+  else if (e.button === 2) placeBlock();
+});
+document.addEventListener('contextmenu', e => e.preventDefault());
+addEventListener('wheel', e => {
+  if (!pointerLocked) return;
+  let s = selectedSlot + (e.deltaY > 0 ? 1 : -1);
+  if (s < 0) s = PALETTE.length - 1; if (s >= PALETTE.length) s = 0;
+  selectSlot(s);
+});
+
+// ---------- Voxel picking (DDA) for break/place ----------
+function pickVoxel(maxDist = 6) {
+  const cp = Math.cos(player.pitch), sp = Math.sin(player.pitch), sy = Math.sin(player.yaw), cy = Math.cos(player.yaw);
+  const dx = -sy*cp, dy = sp, dz = -cy*cp;
+  let x = Math.floor(player.pos[0]), y = Math.floor(player.pos[1]), z = Math.floor(player.pos[2]);
+  const stepX = dx>0?1:-1, stepY = dy>0?1:-1, stepZ = dz>0?1:-1;
+  const tDX = dx!==0?Math.abs(1/dx):1e9, tDY = dy!==0?Math.abs(1/dy):1e9, tDZ = dz!==0?Math.abs(1/dz):1e9;
+  let tMX = dx>0?(x+1-player.pos[0])*tDX:dx<0?(player.pos[0]-x)*tDX:1e9;
+  let tMY = dy>0?(y+1-player.pos[1])*tDY:dy<0?(player.pos[1]-y)*tDY:1e9;
+  let tMZ = dz>0?(z+1-player.pos[2])*tDZ:dz<0?(player.pos[2]-z)*tDZ:1e9;
+  let t = 0, face = null;
+  for (let i = 0; i < 64; i++) {
+    if (tMX < tMY && tMX < tMZ) { x += stepX; t = tMX; tMX += tDX; face = [-stepX,0,0]; }
+    else if (tMY < tMZ) { y += stepY; t = tMY; tMY += tDY; face = [0,-stepY,0]; }
+    else { z += stepZ; t = tMZ; tMZ += tDZ; face = [0,0,-stepZ]; }
+    if (t > maxDist) return null;
+    const b = worldGet(x, y, z);
+    if (b !== AIR && b !== WATER) return { x, y, z, face, block: b };
+  }
+  return null;
+}
+function breakBlock() {
+  const hit = pickVoxel(); if (!hit || hit.block === BEDROCK) return;
+  worldSet(hit.x, hit.y, hit.z, AIR);
+}
+function placeBlock() {
+  const hit = pickVoxel(); if (!hit || !hit.face) return;
+  const nx = hit.x + hit.face[0], ny = hit.y + hit.face[1], nz = hit.z + hit.face[2];
+  if (ny < 0 || ny >= CHUNK_Y) return;
+  if (worldGet(nx, ny, nz) !== AIR) return;
+  // don't place inside player AABB
+  const w = player.width/2, h = player.height/2;
+  if (nx+1 > player.pos[0]-w && nx < player.pos[0]+w && ny+1 > player.pos[1]-h && ny < player.pos[1]+h && nz+1 > player.pos[2]-w && nz < player.pos[2]+w) return;
+  worldSet(nx, ny, nz, PALETTE[selectedSlot]);
+}
+
+// ---------- Physics ----------
+function collides(px, py, pz) {
+  const w = player.width/2, h = player.height/2;
+  const minX = Math.floor(px - w), maxX = Math.floor(px + w);
+  const minY = Math.floor(py - h), maxY = Math.floor(py + h);
+  const minZ = Math.floor(pz - w), maxZ = Math.floor(pz + w);
+  for (let x=minX; x<=maxX; x++) for (let y=minY; y<=maxY; y++) for (let z=minZ; z<=maxZ; z++)
+    if (isSolid(worldGet(x, y, z))) return true;
+  return false;
+}
+function updatePlayer(dt) {
+  const sy = Math.sin(player.yaw), cy = Math.cos(player.yaw);
+  const fwdX = -sy, fwdZ = -cy, rgtX = cy, rgtZ = -sy;
+  let mx = 0, mz = 0;
+  if (keys['KeyW']) { mx += fwdX; mz += fwdZ; }
+  if (keys['KeyS']) { mx -= fwdX; mz -= fwdZ; }
+  if (keys['KeyA']) { mx -= rgtX; mz -= rgtZ; }
+  if (keys['KeyD']) { mx += rgtX; mz += rgtZ; }
+  const ml = Math.hypot(mx, mz); if (ml > 0) { mx/=ml; mz/=ml; }
+  const sprint = keys['ShiftLeft'] || keys['ShiftRight'];
+  const speed = (player.flying ? 12 : (sprint ? 8.5 : 4.5));
+  player.vel[0] = mx * speed;
+  player.vel[2] = mz * speed;
+  if (player.flying) {
+    player.vel[1] = 0;
+    if (keys['Space']) player.vel[1] = speed;
+    if (sprint) player.vel[1] = -speed;
+  } else {
+    player.vel[1] -= 24 * dt;
+    if (player.vel[1] < -40) player.vel[1] = -40;
+    if (player.onGround && keys['Space']) player.vel[1] = 8.2;
+  }
+  player.onGround = false;
+  let px = player.pos[0], py = player.pos[1], pz = player.pos[2];
+  // X
+  let nx = px + player.vel[0]*dt;
+  if (!collides(nx, py, pz)) px = nx; else player.vel[0] = 0;
+  // Z
+  let nz = pz + player.vel[2]*dt;
+  if (!collides(px, py, nz)) pz = nz; else player.vel[2] = 0;
+  // Y
+  let ny = py + player.vel[1]*dt;
+  if (!collides(px, ny, pz)) py = ny; else { if (player.vel[1] < 0) player.onGround = true; player.vel[1] = 0; }
+  player.pos[0] = px; player.pos[1] = py; player.pos[2] = pz;
+  player.pos[0] = Math.max(1, Math.min(WORLD_CX*CHUNK_X-1, player.pos[0]));
+  player.pos[2] = Math.max(1, Math.min(WORLD_CZ*CHUNK_Z-1, player.pos[2]));
+  if (player.pos[1] < -10) { findSpawn(); player.vel[0]=player.vel[1]=player.vel[2]=0; }
+}
+
+// ---------- Block highlight (projected wireframe) ----------
+function drawHighlight() {
+  const hit = pickVoxel();
+  if (!hit) return;
+  const x0 = hit.x, y0 = hit.y, z0 = hit.z, x1 = x0+1, y1 = y0+1, z1 = z0+1;
+  const corners = [
+    [x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1],
+    [x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]
+  ];
+  const proj = [];
+  for (const c of corners) {
+    const rx = c[0]-camX, ry = c[1]-camY, rz = c[2]-camZ;
+    const cz = rx*fwdX + ry*fwdY + rz*fwdZ;
+    if (cz <= 0.05) { proj.push(null); continue; }
+    const cx = rx*rgtX + rz*rgtZ;
+    const cy = rx*upX + ry*upY + rz*upZ;
+    const sxp = (cx / cz / tanFov / aspect) * 0.5 * view.width + view.width*0.5;
+    const syp = (1 - (cy / cz / tanFov + 1) * 0.5) * view.height;
+    proj.push([sxp, syp]);
+  }
+  const edges = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+  vctx.save();
+  vctx.strokeStyle = 'rgba(0,0,0,0.6)'; vctx.lineWidth = 2;
+  vctx.beginPath();
+  for (const [a,b] of edges) { if (proj[a] && proj[b]) { vctx.moveTo(proj[a][0], proj[a][1]); vctx.lineTo(proj[b][0], proj[b][1]); } }
+  vctx.stroke();
+  vctx.restore();
+}
+
+// ---------- Hotbar UI ----------
+const hotbarEl = document.getElementById('hotbar');
+let selectedSlot = 0;
+const slotEls = [];
+PALETTE.forEach((blockId, i) => {
+  const slot = document.createElement('div');
+  slot.className = 'slot' + (i === 0 ? ' active' : '');
+  const num = document.createElement('div'); num.className = 'num'; num.textContent = i+1;
+  const ic = document.createElement('canvas'); ic.width = ic.height = 38;
+  const ictx = ic.getContext('2d'); ictx.imageSmoothingEnabled = false;
+  const t = (TILE_MAP[blockId] && TILE_MAP[blockId][2]) || 0;
+  const origin = tileOrigin[t];
+  ictx.drawImage(atlasCanvas, origin.ox, origin.oy, TEX, TEX, 0, 0, 38, 38);
+  const name = document.createElement('div'); name.className = 'name'; name.textContent = ({1:'Grass',2:'Dirt',3:'Stone',4:'Sand',5:'Wood',6:'Leaves',7:'Water',8:'Bedrock',9:'Snow',10:'Plank'})[blockId];
+  slot.appendChild(num); slot.appendChild(ic); slot.appendChild(name);
+  slot.addEventListener('click', () => selectSlot(i));
+  hotbarEl.appendChild(slot);
+  slotEls.push(slot);
+});
+function selectSlot(i) { selectedSlot = i; slotEls.forEach((el, idx) => el.classList.toggle('active', idx === i)); }
+
+// ---------- World generation ----------
+const progEl = document.getElementById('prog');
+const playBtn = document.getElementById('playBtn');
+function setProgress(p) { progEl.style.width = (p*100)+'%'; }
+
+async function generateWorld() {
+  let total = WORLD_CX * WORLD_CZ;
+  for (let cx = 0; cx < WORLD_CX; cx++)
+    for (let cz = 0; cz < WORLD_CZ; cz++) {
+      world.set(chunkKey(cx, cz), generateChunk(cx, cz));
+      setProgress((cx*WORLD_CZ+cz+1)/total*0.7);
+      if ((cx*WORLD_CZ+cz) % 2 === 0) await new Promise(r => setTimeout(r, 0));
+    }
+  setProgress(1);
+  ready = true;
+  playBtn.disabled = false;
+  playBtn.textContent = 'Play';
+}
+
+// ---------- Loop ----------
+let last = performance.now(), fpsAcc = 0, fpsCount = 0;
+const fpsEl = document.getElementById('fps'), posEl = document.getElementById('pos'), chunksEl = document.getElementById('chunks');
+let started = false;
+
+let ready = false;
+function loop(now) {
+  requestAnimationFrame(loop);
+  const dt = Math.min(0.05, (now - last) / 1000);
+  last = now;
+  if (ready) {
+    renderFrame();
+    if (started) { updatePlayer(dt); drawHighlight(); }
+  }
+  fpsAcc += dt; fpsCount++;
+  if (fpsAcc >= 0.5) {
+    fpsEl.textContent = Math.round(fpsCount / fpsAcc);
+    posEl.textContent = player.pos[0].toFixed(1)+', '+player.pos[1].toFixed(1)+', '+player.pos[2].toFixed(1);
+    chunksEl.textContent = world.size;
+    fpsAcc = 0; fpsCount = 0;
+  }
+}
+requestAnimationFrame(loop);
+
+addEventListener('resize', () => { resizeRender(); });
+
+generateWorld().then(() => { findSpawn(); });
+
+playBtn.addEventListener('click', () => {
+  document.getElementById('overlay').style.display = 'none';
+  view.requestPointerLock();
+  started = true;
+  last = performance.now();
+});
+</script>
+</body>
+</html>
