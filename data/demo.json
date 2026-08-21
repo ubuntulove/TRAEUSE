@@ -1,0 +1,17 @@
+{
+  "schema": "lifeos/demo.v1",
+  "points": [
+    { "grid": [6, 6], "norm": { "x": 0.5, "y": 0.5 }, "label": "origin", "color": "#7c5cff" }
+  ],
+  "params": {
+    "intensity": 50,
+    "speed": 2,
+    "entropy": 0.3,
+    "coherence": 0.65,
+    "resonance": 0.2
+  },
+  "notes": {
+    "v1": "Indexed JSON Writer 演示 — 所有改动通过带索引补丁完成",
+    "v2": "idx 字段使用路径数组（字符串=键名，数字=数组下标）"
+  }
+}

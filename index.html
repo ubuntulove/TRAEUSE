@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>向前！向前！向前！ — 人生意义量化实验室</title>
+<link rel="stylesheet" href="styles/game.css" />
+<link rel="stylesheet" href="styles/tools.css" />
+</head>
+<body>
+  <!-- 顶部标题 -->
+  <header id="top-bar">
+    <div class="logo">
+      <span class="logo-mark">三</span>
+      <div class="logo-text">
+        <h1>人生意义 · 量化实验室</h1>
+        <p class="subtitle">Meaning-Quantum · LifeOS v1.0</p>
+      </div>
+    </div>
+    <nav class="top-actions">
+      <button id="btn-meditate" class="pill" title="冥想：静下来觉察当下">🧘 冥想</button>
+      <button id="btn-insight" class="pill accent" title="顿悟：随机生成反常识视角">💡 顿悟</button>
+      <button id="btn-tools" class="pill" title="打开AI编码工具面板">🛠 AI工具</button>
+      <button id="btn-reset" class="pill ghost" title="重置全部数值">⟳ 重置</button>
+    </nav>
+  </header>
+
+  <!-- 主体布局：左侧游戏 / 右侧工具 -->
+  <main id="layout">
+    <!-- ===== 游戏区域 ===== -->
+    <section id="game-zone">
+      <!-- 核心可视化：多维雷达 + 粒子星海 -->
+      <div class="viz-stage">
+        <canvas id="starfield" class="viz-bg"></canvas>
+        <canvas id="radar" class="viz-fg"></canvas>
+        <div id="meaning-meter" class="overlay-meter">
+          <div class="meter-label">意义值 MEANING</div>
+          <div class="meter-track"><div id="meter-fill" class="meter-fill"></div></div>
+          <div id="meter-number" class="meter-number">0</div>
+        </div>
+        <div id="epiphany-layer" class="epiphany-layer"></div>
+      </div>
+
+      <!-- 八大维度滑块面板 -->
+      <div id="dimension-panel" class="card">
+        <h2 class="card-title">🎯 人生八维度 · 实时调参</h2>
+        <div class="dim-grid"></div>
+      </div>
+
+      <!-- 实时事件 & 反馈日志 -->
+      <div class="row-2">
+        <div id="event-panel" class="card">
+          <h2 class="card-title">🌌 生命事件流</h2>
+          <div id="event-stream" class="event-stream"></div>
+        </div>
+        <div id="perspective-panel" class="card">
+          <h2 class="card-title">🔍 换位思考 · 点悟当下</h2>
+          <div id="perspective-out" class="perspective-out">
+            <div class="persp-placeholder">点击 "💡 顿悟" 或在星海中选择一个点，触发一次视角跃迁。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== AI 编码工具区域 ===== -->
+    <aside id="tools-zone" class="collapsed">
+      <div class="tools-header">
+        <h2>🛠 AI Coding Toolkit · 下一代非 ask 工具</h2>
+        <button id="btn-collapse-tools" class="icon-btn" title="折叠">⫷</button>
+      </div>
+
+      <!-- Tab 切换 -->
+      <div class="tabs">
+        <button class="tab active" data-tab="coord">📍 坐标定位</button>
+        <button class="tab" data-tab="slider">🎚 滑块矩阵</button>
+        <button class="tab" data-tab="json">📄 索引JSON写入器</button>
+      </div>
+
+      <!-- 坐标定位工具 -->
+      <div class="tab-panel active" id="tab-coord">
+        <div class="coord-intro">
+          <h3>📍 Coordinate Locator</h3>
+          <p>在 2D 网格中选择坐标点，直接输出 <code>{x,y,label}</code>，替代自然语言描述。</p>
+        </div>
+        <div class="coord-tool">
+          <canvas id="coord-canvas" width="420" height="320"></canvas>
+          <div class="coord-info">
+            <div><span>选中点：</span><code id="coord-selected">—</code></div>
+            <div><span>最近锚点：</span><code id="coord-anchor">—</code></div>
+            <div class="coord-grid-size">
+              <label>网格密度：</label>
+              <input type="range" id="coord-density" min="4" max="32" value="12" />
+              <span id="coord-density-val">12</span>
+            </div>
+            <button id="coord-emit" class="pill accent">发射此坐标 → 生成代码片段</button>
+          </div>
+        </div>
+        <pre id="coord-output" class="output-block">// 坐标输出区</pre>
+      </div>
+
+      <!-- 滑块矩阵工具 -->
+      <div class="tab-panel" id="tab-slider">
+        <div class="slider-intro">
+          <h3>🎚 Slider Matrix</h3>
+          <p>多轴参数调节面板，实时生成参数对象，支持预设、锁定与快照。</p>
+        </div>
+        <div id="slider-matrix" class="slider-matrix"></div>
+        <div class="slider-actions">
+          <button id="slider-add" class="pill">+ 添加轴</button>
+          <button id="slider-snap" class="pill accent">📸 快照参数</button>
+          <button id="slider-lock" class="pill">🔒 锁定/解锁</button>
+          <button id="slider-preset" class="pill ghost">载入预设</button>
+        </div>
+        <pre id="slider-output" class="output-block">// 滑块输出区</pre>
+      </div>
+
+      <!-- 索引 JSON 写入工具 -->
+      <div class="tab-panel" id="tab-json">
+        <div class="json-intro">
+          <h3>📄 Indexed JSON Writer</h3>
+          <p>用 <b>带行索引的 JSON 补丁</b> 替代 write 工具：精确定位 → 最小化修改 → 可审计 diff。</p>
+        </div>
+        <div class="json-tool">
+          <div class="json-col">
+            <label>目标文件</label>
+            <select id="json-target-file">
+              <option value="/workspace/data/demo.json">/workspace/data/demo.json</option>
+              <option value="memory">内存缓冲区（仅演示）</option>
+            </select>
+            <label>源内容（当前文件）</label>
+            <textarea id="json-source" rows="10" readonly></textarea>
+          </div>
+          <div class="json-col">
+            <label>Indexed JSON 补丁</label>
+            <textarea id="json-patch" rows="10" placeholder='例如：
+[
+  {"op":"set", "idx":[2,4], "key":"score", "value":99},
+  {"op":"insert", "idx":[5], "value":{"new":"entry"}},
+  {"op":"delete", "idx":[7]}
+]'></textarea>
+            <div class="json-actions">
+              <button id="json-apply" class="pill accent">▶ 应用补丁</button>
+              <button id="json-generate" class="pill">🧩 从坐标/滑块生成补丁</button>
+              <button id="json-validate" class="pill ghost">✓ 校验索引</button>
+            </div>
+            <label>执行结果 / diff</label>
+            <pre id="json-output" class="output-block">// 输出</pre>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- 底部状态栏 -->
+  <footer id="status-bar">
+    <span>🕐 <span id="clock">00:00:00</span></span>
+    <span>🧬 熵: <span id="entropy">0</span></span>
+    <span>⚡ 流状态: <span id="flow-state">平静</span></span>
+    <span>🎯 下一步: <span id="next-step">请调整八维度参数开始</span></span>
+    <span class="status-right">♾ Meaning-Quantum Engine</span>
+  </footer>
+
+  <!-- 脚本 -->
+  <script src="js/game/gameCore.js"></script>
+  <script src="js/game/audioEngine.js"></script>
+  <script src="js/game/renderer.js"></script>
+  <script src="js/game/events.js"></script>
+  <script src="js/tools/coordinate.js"></script>
+  <script src="js/tools/slider.js"></script>
+  <script src="js/json-writer/indexer.js"></script>
+  <script src="js/json-writer/writerCore.js"></script>
+  <script src="js/json-writer/transform.js"></script>
+  <script src="js/tools/dashboard.js"></script>
+  <script>
+    // 主入口：初始化全部模块
+    window.addEventListener('DOMContentLoaded', () => {
+      const game = new LifeGame();
+      game.init();
+
+      const audio = new AudioEngine();
+      audio.init();
+      window.__audio = audio;
+
+      const renderer = new Renderer(game, audio);
+      renderer.init();
+      window.__renderer = renderer;
+
+      const eventSys = new EventSystem(game, renderer, audio);
+      eventSys.init();
+      window.__events = eventSys;
+
+      const coord = new CoordinateTool();
+      coord.init();
+
+      const sliderTool = new SliderMatrix();
+      sliderTool.init();
+
+      const indexer = new IndexedJSONIndexer();
+      const writer = new IndexedJSONWriter(indexer);
+      const transform = new IndexedJSONTransform(indexer, writer);
+      window.__writer = writer;
+      window.__indexer = indexer;
+      window.__transform = transform;
+
+      const dash = new Dashboard(game, coord, sliderTool, transform);
+      dash.init();
+      window.__dash = dash;
+    });
+  </script>
+</body>
+</html>

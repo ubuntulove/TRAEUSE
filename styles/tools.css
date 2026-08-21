@@ -1,0 +1,51 @@
+/* =========================================================
+ * AI 编码工具面板 — 补充样式
+ * ========================================================= */
+
+/* Tab 面板内动画 */
+.tab-panel.active{animation: fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(4px);} to{opacity:1;transform:none;}}
+
+/* 坐标工具增强 */
+#coord-canvas.pointing{cursor:copy;}
+
+/* 滑块矩阵样式增强 */
+.slider-row.drag-over{border-color:var(--accent) !important; background:rgba(124,92,255,.12) !important;}
+.slider-row .dim-handle{cursor:grab; color:var(--text-dim); text-align:center;}
+.slider-row .dim-handle:active{cursor:grabbing;}
+.slider-matrix .add-placeholder{
+  text-align:center; padding:10px; color:var(--text-dim);
+  font-size:12px; border:1px dashed var(--border); border-radius:8px;
+  cursor:pointer; transition:.2s;
+}
+.slider-matrix .add-placeholder:hover{border-color:var(--accent); color:var(--accent);}
+
+/* JSON 工具输出增强 */
+.json-diff-add{color:#22c55e;}
+.json-diff-remove{color:#ef4444;}
+.json-diff-change{color:#f59e0b;}
+.json-ln-num{
+  display:inline-block; width:28px; color:#555e88; text-align:right;
+  padding-right:8px; user-select:none;
+}
+
+/* 工具栏折叠/展开动画 */
+body.tools-open #btn-collapse-tools{transform:rotate(180deg);}
+.icon-btn{transition:transform .3s ease;}
+
+/* 工具面板整体响应式微调 */
+@media (max-width: 1400px){
+  body.tools-open #layout{grid-template-columns: 1fr 460px;}
+}
+@media (max-width: 1100px){
+  body.tools-open #layout{grid-template-columns: 1fr 400px;}
+  .coord-tool{grid-template-columns:1fr;}
+  .json-tool{grid-template-columns:1fr;}
+}
+
+/* 小徽章 */
+.badge-new{
+  display:inline-block; font-size:9px; padding:1px 6px; margin-left:4px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#fff; border-radius:99px; letter-spacing:1px;
+}
