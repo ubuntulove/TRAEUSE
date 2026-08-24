@@ -1,0 +1,182 @@
+:root {
+  --bg: #0a0a1a;
+  --bg-2: #15103a;
+  --grid: rgba(120, 120, 220, 0.06);
+  --neon: #00ffd1;
+  --neon-soft: rgba(0, 255, 209, 0.55);
+  --accent: #ff3df0;
+  --gold: #ffd23f;
+  --danger: #ff4060;
+  --text: #e8ecff;
+  --text-dim: #8a8fbf;
+  --panel: rgba(20, 18, 60, 0.85);
+  --border: rgba(0, 255, 209, 0.25);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: radial-gradient(circle at 50% 0%, var(--bg-2), var(--bg) 70%);
+  color: var(--text);
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 12px;
+  gap: 12px;
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  width: min(600px, 96vw);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 10px 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 0 24px rgba(0, 255, 209, 0.08), inset 0 0 12px rgba(0, 255, 209, 0.04);
+  backdrop-filter: blur(6px);
+}
+.hud__item { display: flex; flex-direction: column; align-items: flex-start; }
+.hud__item--center { align-items: center; }
+.hud__item--right { align-items: flex-end; }
+.hud__label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.hud__value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--neon);
+  text-shadow: 0 0 8px var(--neon-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 舞台 ---------- */
+.stage {
+  position: relative;
+  width: min(600px, 96vw);
+  aspect-ratio: 1 / 1;
+}
+#game {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: #06061a;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0, 255, 209, 0.12), inset 0 0 30px rgba(0, 0, 0, 0.6);
+  touch-action: none;
+}
+
+/* ---------- 覆盖层 ---------- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 6, 26, 0.78);
+  border-radius: 16px;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.25s ease;
+}
+.overlay.is-hidden { opacity: 0; pointer-events: none; }
+.overlay__panel {
+  text-align: center;
+  padding: 28px;
+  max-width: 420px;
+}
+.overlay__title {
+  font-size: clamp(32px, 8vw, 52px);
+  letter-spacing: 4px;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--neon), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 30px rgba(0, 255, 209, 0.25);
+  margin-bottom: 8px;
+}
+.overlay__subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+.btn {
+  appearance: none;
+  border: 1px solid var(--neon);
+  background: transparent;
+  color: var(--neon);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 12px 34px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 0 14px rgba(0, 255, 209, 0.3);
+}
+.btn:hover { background: var(--neon); color: var(--bg); box-shadow: 0 0 26px var(--neon-soft); }
+.btn:active { transform: scale(0.96); }
+
+.legend {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 14px;
+  margin-top: 22px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.legend li { display: flex; align-items: center; gap: 8px; justify-content: flex-start; }
+.dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  display: inline-block; flex-shrink: 0;
+}
+.dot--food { background: var(--neon); box-shadow: 0 0 8px var(--neon-soft); }
+.dot--gold { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+.dot--slow { background: #6ad1ff; box-shadow: 0 0 8px #6ad1ff; }
+.dot--double { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+/* ---------- 触摸方向键（仅小屏可见） ---------- */
+.touchpad {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.touchpad__row { display: flex; gap: 8px; }
+.touchpad__btn {
+  width: 56px; height: 56px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--neon);
+  font-size: 18px;
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.touchpad__btn:active { background: var(--neon); color: var(--bg); }
+
+@media (max-width: 640px) {
+  .touchpad { display: flex; }
+}
+
+/* ---------- 飘字动画 ---------- */
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-32px); }
+}

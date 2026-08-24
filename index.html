@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0a0a1a" />
+  <title>NEON SNAKE — 霓虹贪吃蛇</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="hud">
+      <div class="hud__item">
+        <span class="hud__label">SCORE</span>
+        <span class="hud__value" id="score">0</span>
+      </div>
+      <div class="hud__item hud__item--center">
+        <span class="hud__label">LEVEL</span>
+        <span class="hud__value" id="level">1</span>
+      </div>
+      <div class="hud__item hud__item--right">
+        <span class="hud__label">BEST</span>
+        <span class="hud__value" id="best">0</span>
+      </div>
+    </header>
+
+    <main class="stage">
+      <canvas id="game" width="600" height="600"></canvas>
+
+      <!-- 覆盖层：开始 / 暂停 / 结束 -->
+      <div class="overlay" id="overlay">
+        <div class="overlay__panel" id="overlay-panel">
+          <h1 class="overlay__title" id="overlay-title">NEON SNAKE</h1>
+          <p class="overlay__subtitle" id="overlay-subtitle">方向键 / WASD 移动 · 空格暂停</p>
+          <button class="btn" id="start-btn">开始游戏</button>
+          <ul class="legend">
+            <li><span class="dot dot--food"></span>普通食物 +10</li>
+            <li><span class="dot dot--gold"></span>金币 +50</li>
+            <li><span class="dot dot--slow"></span>减速道具</li>
+            <li><span class="dot dot--double"></span>双倍分数</li>
+          </ul>
+        </div>
+      </div>
+    </main>
+
+    <!-- 移动端虚拟方向键 -->
+    <div class="touchpad" id="touchpad">
+      <button class="touchpad__btn" data-dir="up" aria-label="上">▲</button>
+      <div class="touchpad__row">
+        <button class="touchpad__btn" data-dir="left" aria-label="左">◀</button>
+        <button class="touchpad__btn" data-dir="down" aria-label="下">▼</button>
+        <button class="touchpad__btn" data-dir="right" aria-label="右">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模块化脚本（顺序重要：底层 → 实体 → 系统 → 入口） -->
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/entities.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
