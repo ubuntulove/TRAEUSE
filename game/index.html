@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>STELLAR DEFENSE — 星际防御战</title>
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <div id="app">
+    <canvas id="game"></canvas>
+
+    <!-- 主菜单 -->
+    <section id="menu" class="overlay active">
+      <h1 class="title">STELLAR<br /><span>DEFENSE</span></h1>
+      <p class="subtitle">星际防御战</p>
+      <div class="controls-info">
+        <div><kbd>W A S D</kbd> / <kbd>↑ ↓ ← →</kbd> 移动</div>
+        <div><kbd>Space</kbd> 射击 &nbsp;·&nbsp; <kbd>P</kbd> 暂停</div>
+      </div>
+      <div class="hi-score">最高分 <span id="menu-hi">0</span></div>
+      <button id="btn-start" class="btn primary">开始游戏</button>
+    </section>
+
+    <!-- 暂停界面 -->
+    <section id="pause" class="overlay">
+      <h2 class="title-sm">已暂停</h2>
+      <button id="btn-resume" class="btn primary">继续</button>
+      <button id="btn-quit" class="btn">返回主菜单</button>
+    </section>
+
+    <!-- 游戏结束界面 -->
+    <section id="gameover" class="overlay">
+      <h2 class="title-sm">飞船坠毁</h2>
+      <div class="result">
+        <div>本局得分 <span id="final-score">0</span></div>
+        <div>最高得分 <span id="final-hi">0</span></div>
+        <div>抵达波次 <span id="final-wave">1</span></div>
+      </div>
+      <button id="btn-retry" class="btn primary">再战一次</button>
+      <button id="btn-menu" class="btn">返回主菜单</button>
+    </section>
+
+    <!-- HUD -->
+    <div id="hud" class="hud">
+      <div class="hud-left">
+        <div class="bar-group">
+          <span class="bar-label">HP</span>
+          <div class="bar"><i id="hp-bar"></i></div>
+        </div>
+        <div class="bar-group">
+          <span class="bar-label">SHIELD</span>
+          <div class="bar shield"><i id="shield-bar"></i></div>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div class="score">SCORE <b id="score">0</b></div>
+        <div class="wave">WAVE <b id="wave">1</b></div>
+      </div>
+    </div>
+
+    <p id="hint" class="hint"></p>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
