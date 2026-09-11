@@ -1,0 +1,24 @@
+;
+; Supermarket Left Arm — a @petermolydeux pitch, in Godot.
+; What if our character had a supermarket for a left arm?
+;
+
+config_version=5
+
+[application]
+
+config/name="Supermarket Left Arm"
+run/main_scene="res://Main.tscn"
+config/features=PackedStringArray("4.2", "GL Compatibility")
+config/description="The character's left arm is a supermarket. Pluck items off your own shelves and hand them to passing customers."
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=600
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
