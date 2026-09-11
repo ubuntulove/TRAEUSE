@@ -1,0 +1,18 @@
+config_version=5
+
+[application]
+
+config/name="Twin Arms"
+config/description="A co-op game where two players each control one arm of the game's protagonist. Inspired by @petermolydeux."
+run/main_scene="res://Main.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
