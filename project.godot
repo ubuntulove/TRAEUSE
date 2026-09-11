@@ -1,0 +1,22 @@
+config_version=5
+
+[autoload]
+
+GameState="*res://autoload/GameState.gd"
+
+[application]
+
+config/name="CrossGameDeath"
+config/description="Dying in Game A corrupts it. The only way to repair it is to do something in Game B."
+run/main_scene="res://MainMenu.tscn"
+
+[display]
+
+window/size/viewport_width=960
+window/size/viewport_height=540
+window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
