@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -200,18 +201,23 @@ namespace MolydeuxLauncher
         {
             // Candidate paths - covers per-project output and shared output layouts,
             // and both Debug and Release configurations, for .NET 6 Windows desktop.
+            // baseDir is the Launcher exe dir: <solution>/Launcher/bin/Debug/net6.0-windows/
+            // Demo exe dir:            <solution>/Demos/<name>/bin/Debug/net6.0-windows/
+            // Relative from baseDir:  ../../../../Demos/<name>/bin/.../<name>.exe
             string[] relPaths = new[]
             {
+                // Case 1: shared output dir (all exes next to launcher)
                 name + ".exe",
                 name + ".dll",
-                Path.Combine("..", name, "bin", "Debug", "net6.0-windows", name + ".exe"),
-                Path.Combine("..", name, "bin", "Debug", "net6.0-windows", name + ".dll"),
-                Path.Combine("..", name, "bin", "Release", "net6.0-windows", name + ".exe"),
-                Path.Combine("..", name, "bin", "Release", "net6.0-windows", name + ".dll"),
-                Path.Combine("..", "Demos", name, "bin", "Debug", "net6.0-windows", name + ".exe"),
-                Path.Combine("..", "Demos", name, "bin", "Debug", "net6.0-windows", name + ".dll"),
-                Path.Combine("..", "Demos", name, "bin", "Release", "net6.0-windows", name + ".exe"),
-                Path.Combine("..", "Demos", name, "bin", "Release", "net6.0-windows", name + ".dll"),
+                // Case 2: per-project output under the solution tree (Debug)
+                Path.Combine("..", "..", "..", "..", "Demos", name, "bin", "Debug", "net6.0-windows", name + ".exe"),
+                Path.Combine("..", "..", "..", "..", "Demos", name, "bin", "Debug", "net6.0-windows", name + ".dll"),
+                // Case 3: per-project output under the solution tree (Release)
+                Path.Combine("..", "..", "..", "..", "Demos", name, "bin", "Release", "net6.0-windows", name + ".exe"),
+                Path.Combine("..", "..", "..", "..", "Demos", name, "bin", "Release", "net6.0-windows", name + ".dll"),
+                // Case 4: fallback - one level up (if output dirs are flattened)
+                Path.Combine("..", "Demos", name, name + ".exe"),
+                Path.Combine("..", "Demos", name, name + ".dll"),
             };
             foreach (var rel in relPaths)
             {
